@@ -47,7 +47,7 @@ public class TweetController {
         tweetService.likeTweetById(id, credential);
     }
 
-    // different
+    // This is a GET request. 
     @GetMapping("/{id}/likes")
     public List<UserResponseDto> getLikeForTweet(@PathVariable Long id) {
         return tweetService.getLikeForTweet(id);
