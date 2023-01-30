@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Credential {
     private String username;
-
     private String password;
 }
