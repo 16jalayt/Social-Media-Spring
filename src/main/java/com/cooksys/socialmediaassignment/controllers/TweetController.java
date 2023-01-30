@@ -18,7 +18,7 @@ import com.cooksys.socialmediaassignment.dtos.UserResponseDto;
 import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
 import com.cooksys.socialmediaassignment.services.TweetService;
 
-import lombok.RequiredArgsConstructor;""
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
