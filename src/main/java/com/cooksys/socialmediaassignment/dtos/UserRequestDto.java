@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 public class UserRequestDto {
 
 	private CredentialRequestDto credential;
-	private ProfileRequestDto profile;
+	private ProfileDto profile;
 
 }

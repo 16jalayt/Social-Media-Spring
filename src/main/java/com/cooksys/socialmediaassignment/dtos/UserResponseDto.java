@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class UserResponseDto {
 
 	private String username;
-	private ProfileResponseDto profile;
+	private ProfileDto profile;
 	private Timestamp joined;
 
 }

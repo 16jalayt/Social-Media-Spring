@@ -1,4 +1,4 @@
-package com.cooksys.socialmediaassignment.entities;
+package com.cooksys.socialmediaassignment.entities.embeddable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -8,12 +8,15 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Data
 @NoArgsConstructor
-public class Credential {
+public class Profile {
 
-	@Column(nullable = false, unique = true)
-	private String username;
+	private String firstName;
+
+	private String lastName;
 
 	@Column(nullable = false)
-	private String password;
+	private String email;
+
+	private String phone;
 
 }

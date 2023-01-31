@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
+import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
