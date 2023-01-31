@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class Profile {
     private String firstName;
