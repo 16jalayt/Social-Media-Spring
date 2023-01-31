@@ -15,5 +15,4 @@ public class Credential {
 
 	@Column(nullable = false)
 	private String password;
-
 }
