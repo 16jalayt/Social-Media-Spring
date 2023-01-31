@@ -20,18 +20,25 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final UserMapper userMapper;
 
+	private User getUser(String username) {
+
+		Optional<User> optionalUser = userRepository.findByCredentialUsername(username);
+
+		if (optionalUser.isEmpty()) {
+			// throw new NotFoundException("No user found with username: " + username );
+		}
+		return optionalUser.get();
+	}
+
 	@Override
 	public List<UserResponseDto> getAllUsers() {
 		return userMapper.entitiesToUserResponseDtos(userRepository.findAllByDeletedFalse());
 	}
 
-//	@Override
-//	public boolean checkUser(String username) {
-//		Optional<User> userResult = userRepository.findByUsername(username);
-//		if (userResult.isEmpty()) {
-//			return false;
-//		}
-//		return true;
-//	}
+	@Override
+	public UserResponseDto getUserByUsername(String username) {
+		return userMapper.entityToUserResponseDto(getUser(username));
+
+	}
 
 }

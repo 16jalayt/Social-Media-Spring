@@ -26,9 +26,9 @@ public class UserController {
 	}
 	
 	//Checks whether or not a given username exists.
-//	@GetMapping("/username/exists/@{username}")
-//	public boolean checkUser(@PathVariable String username) {
-//		return userService.checkUser(username);
-//	}
+	@GetMapping("/@{username}")
+	public UserResponseDto getUserByUsername(@PathVariable String username) {
+		return userService.getUserByUsername(username);
+	}
 
 }
