@@ -1,7 +1,12 @@
 package com.cooksys.socialmediaassignment.services.impl;
 
-import com.cooksys.socialmediaassignment.services.TweetService;
 
-public class TweetServiceImpl implements TweetService {
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class TweetServiceImpl {
 
 }
