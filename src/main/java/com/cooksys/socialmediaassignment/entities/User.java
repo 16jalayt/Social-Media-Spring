@@ -1,5 +1,7 @@
 package com.cooksys.socialmediaassignment.entities;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -8,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +25,7 @@ public class User {
 	private Long id;
 
 	@Column(nullable = false)
-	private Long joined;
+	private Timestamp joined = Timestamp.valueOf(LocalDateTime.now());
 
 	@Embedded
 	private Credential credential;
@@ -32,32 +35,20 @@ public class User {
 
 	private boolean deleted;
 
-//	@OneToMany(mappedBy = "tweet")
-//	private List<Tweet> tweets;
+	@OneToMany(mappedBy = "tweet")
+	private Set<Tweet> tweets;
 
 	@ManyToMany
-	private Set<User> followerUsers;
+	private Set<User> followers;
 
-	@ManyToMany
-	private Set<User> followingUsers;
+	@ManyToMany(mappedBy = "followers")
+	private Set<User> following;
 
-//	@ManyToOne
-//	private User follower;
-//	
-//	@OneToMany(mappedBy="follower")
-//	private Set<User> followers;
-//
-//	@OneToMany(mappedBy = "followingUser")
-//	private Set<User> following;
-//	
-//	@ManyToOne
-//	private User followingUser;
 
-//
-//	@ManyToMany
-//	private List<Tweet> userLikes;
-//	
-//	@ManyToMany
-//	private List<Tweet> userMantions;
+	@ManyToMany(mappedBy = "tweetlikes")
+	private Set<Tweet> userLikes;
+
+	@ManyToMany(mappedBy = "mentions")
+	private Set<Tweet> userMentions;
 
 }

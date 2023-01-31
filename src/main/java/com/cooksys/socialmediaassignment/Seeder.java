@@ -33,7 +33,6 @@ public class Seeder implements CommandLineRunner {
 		user1.setCredential(credential1);
 		user1.setProfile(profile1);
 		user1.setDeleted(false);
-		user1.setJoined(Instant.now().getEpochSecond());
 		userRepository.saveAndFlush(user1);
 
 		Credential credential2 = new Credential();
@@ -48,7 +47,7 @@ public class Seeder implements CommandLineRunner {
 		user2.setCredential(credential2);
 		user2.setProfile(profile2);
 		user2.setDeleted(false);
-		user2.setJoined(Instant.now().getEpochSecond());
+
 		userRepository.saveAndFlush(user2);
 
 	}
