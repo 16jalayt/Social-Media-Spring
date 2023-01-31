@@ -23,6 +23,7 @@ public class Hashtag {
     private Timestamp firstUsed;
     private Timestamp lastUsed;
 
+    //Do we need?
     @ManyToMany
     private List<Tweet> tweets;
 }
