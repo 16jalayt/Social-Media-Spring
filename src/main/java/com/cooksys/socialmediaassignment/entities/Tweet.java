@@ -7,6 +7,7 @@ import java.util.Set;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,9 +20,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -34,11 +34,23 @@ public class Tweet {
     @GeneratedValue
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    @NotNull
+    private User author;
+
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "tweet_hashtag_mapping",
             joinColumns = {@JoinColumn(name = "hashtag_id")},
             inverseJoinColumns = {@JoinColumn(name = "tweet_id")}
     )
+    private Set<Hashtag> hashtags = new HashSet<>();
+
+    @ManyToMany(mappedBy = "mentions")
+    private Set<User> usersMentioned = new HashSet<>();
+
+    @ManyToMany(mappedBy = "likedTweets")
+    private Set<User> likes = new HashSet<>();
 
     @OneToMany(mappedBy = "repostOf")
     private Set<Tweet> reposts = new HashSet<>();
@@ -62,4 +74,33 @@ public class Tweet {
     @CreationTimestamp
     private Date posted;
 
+    public void addMentionedUser(User user) {
+        this.usersMentioned.add(user);
+        user.getMentions().add(this);
+    }
+
+    public void removeMentionedUser(User user) {
+        this.usersMentioned.remove(user);
+        user.getMentions().remove(this);
+    }
+
+    public void addLike(User user) {
+        this.likes.add(user);
+        user.getLikedTweets().add(this);
+    }
+
+    public void removeLike(User user) {
+        this.likes.add(user);
+        user.getLikedTweets().remove(this);
+    }
+
+    public void addHashtag(Hashtag hashtag) {
+        this.hashtags.add(hashtag);
+        hashtag.getTweets().add(this);
+    }
+
+    public void removeHashtag(Hashtag hashtag) {
+        this.hashtags.remove(hashtag);
+        hashtag.getTweets().remove(this);
+    }
 }

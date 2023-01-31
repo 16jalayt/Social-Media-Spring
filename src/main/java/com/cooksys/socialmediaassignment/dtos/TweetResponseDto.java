@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class TweetResponseDto {
     private Long id;
-    // private UserResponseDto author;
+    private UserResponseDto author;
     private String content;
     private Date posted;
     private Tweet inReplyTo;

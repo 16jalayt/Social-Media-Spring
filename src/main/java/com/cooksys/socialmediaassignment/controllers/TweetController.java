@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cooksys.socialmediaassignment.dtos.ContextResponseDto;
 import com.cooksys.socialmediaassignment.dtos.TweetRequestDto;
 import com.cooksys.socialmediaassignment.dtos.TweetResponseDto;
-
+import com.cooksys.socialmediaassignment.dtos.UserResponseDto;
 import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
 import com.cooksys.socialmediaassignment.services.TweetService;
 
@@ -46,6 +48,16 @@ public class TweetController {
         tweetService.likeTweetById(id, credential);
     }
 
+    @GetMapping("/{id}/likes")
+    public List<UserResponseDto> getLikeForTweet(@PathVariable Long id) {
+        return tweetService.getLikeForTweet(id);
+    }
+
+    @GetMapping("/{id}/context")
+    public ContextResponseDto getContextForTweet(@PathVariable Long id) {
+        return tweetService.getContextForTweet(id);
+    }
+
     @DeleteMapping("/{id}")
     public TweetResponseDto deleteTweetById(@PathVariable Long id, @RequestBody Credential credential) {
         return tweetService.deleteTweetById(id, credential);
@@ -73,5 +85,8 @@ public class TweetController {
         return tweetService.getRepliesToTweetById(id);
     }
 
-
+    @GetMapping("/{id}/mentions")
+    public List<UserResponseDto> getMentionInTweetById(@PathVariable Long id) {
+        return tweetService.getMentionInTweetById(id);
+    }
 }
