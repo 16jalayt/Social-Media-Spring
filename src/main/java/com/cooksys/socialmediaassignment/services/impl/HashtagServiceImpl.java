@@ -2,6 +2,7 @@ package com.cooksys.socialmediaassignment.services.impl;
 
 import com.cooksys.socialmediaassignment.dtos.HashtagResponseDto;
 import com.cooksys.socialmediaassignment.dtos.TweetResponseDto;
+import com.cooksys.socialmediaassignment.entities.Hashtag;
 import com.cooksys.socialmediaassignment.entities.Tweet;
 import com.cooksys.socialmediaassignment.mappers.HashtagMapper;
 import com.cooksys.socialmediaassignment.mappers.TweetMapper;
@@ -26,7 +27,7 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public HashtagResponseDto validateTagExists(String label)
     {
-        return null;
+        return hashtagMapper.entityToDto(hashtagRepository.findByLabel(label));
     }
 
     @Override
