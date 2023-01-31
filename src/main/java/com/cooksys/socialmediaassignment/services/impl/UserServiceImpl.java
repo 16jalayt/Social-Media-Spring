@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 	private User getUser(String username) {
 
-		Optional<User> optionalUser = userRepository.findByCredentialUsername(username);
+		Optional<User> optionalUser = userRepository.findUserByCredentialUsernameAndDeletedFalse(username);
 
 		if (optionalUser.isEmpty()) {
 			// throw new NotFoundException("No user found with username: " + username );
@@ -39,6 +39,16 @@ public class UserServiceImpl implements UserService {
 	public UserResponseDto getUserByUsername(String username) {
 		return userMapper.entityToUserResponseDto(getUser(username));
 
+	}
+
+	@Override
+	public boolean checkUserByUsername(String username) {
+		Optional<User> optionalUser = userRepository.findUserByCredentialUsernameAndDeletedFalse(username);
+
+		if (optionalUser.isEmpty()) {
+			return false;
+		}
+		return true;
 	}
 
 }

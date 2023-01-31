@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 public class CredentialResponseDto {
 
 	private String username;
-	private String password;
 
 }
