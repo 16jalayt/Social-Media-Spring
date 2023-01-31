@@ -7,11 +7,15 @@ import java.util.Set;
 import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
 import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -38,7 +42,7 @@ public class User {
 
 	private boolean deleted;
 
-	@OneToMany(mappedBy = "tweet")
+	@OneToMany(mappedBy = "author")
 	private Set<Tweet> tweets;
 
 	@ManyToMany
@@ -48,10 +52,29 @@ public class User {
 	private Set<User> following;
 
 
-	@ManyToMany(mappedBy = "likes")
-	private Set<Tweet> likedTweets;
-	@ManyToMany(mappedBy = "usersMentioned")
-	private Set<Tweet> mentions;
+	 @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	    @JoinTable(name = "tweet_liked_mapping",
+	            joinColumns = {@JoinColumn(name = "tweet_id")},
+	            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+	    )
+	 private Set<Tweet> likedTweets;
+	 
+	 @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	    @JoinTable(name = "mention_mapping",
+	            joinColumns = {@JoinColumn(name = "tweet_id")},
+	            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+	    )
+	 private Set<Tweet> mentions;
+	 
+////	@ManyToMany(mappedBy = "likes")
+//	@ManyToMany
+//	@JoinColumn(name = "tweeter_id")
+//	private Set<Tweet> likedTweets;
+//	
+////	@ManyToMany(mappedBy = "usersMentioned")
+//	@ManyToMany
+//	@JoinColumn(name = "tweeter_id")
+//	private Set<Tweet> mentions;
 
 
 }

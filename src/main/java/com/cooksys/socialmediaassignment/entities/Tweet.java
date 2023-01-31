@@ -36,7 +36,7 @@ public class Tweet {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private User author;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
