@@ -1,16 +1,13 @@
 package com.cooksys.socialmediaassignment.entities;
 
-import java.util.List;
+import java.util.Set;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +22,7 @@ public class User {
 	private Long id;
 
 	@Column(nullable = false)
-	private long joined;
+	private Long joined;
 
 	@Embedded
 	private Credential credential;
@@ -38,17 +35,29 @@ public class User {
 //	@OneToMany(mappedBy = "tweet")
 //	private List<Tweet> tweets;
 
-	@ManyToOne
-	private User follower;
+	@ManyToMany
+	private Set<User> followerUsers;
 
-	@OneToMany(mappedBy = "follower")
-	private List<User> following;
+	@ManyToMany
+	private Set<User> followingUsers;
+
+//	@ManyToOne
+//	private User follower;
+//	
+//	@OneToMany(mappedBy="follower")
+//	private Set<User> followers;
+//
+//	@OneToMany(mappedBy = "followingUser")
+//	private Set<User> following;
+//	
+//	@ManyToOne
+//	private User followingUser;
 
 //
-//	@OneToMany(mappedBy = "tweet")
+//	@ManyToMany
 //	private List<Tweet> userLikes;
 //	
-//	@OneToMany(mappedBy = "tweet")
+//	@ManyToMany
 //	private List<Tweet> userMantions;
 
 }

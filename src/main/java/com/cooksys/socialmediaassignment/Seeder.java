@@ -35,7 +35,7 @@ public class Seeder implements CommandLineRunner {
 		user1.setDeleted(false);
 		user1.setJoined(Instant.now().getEpochSecond());
 		userRepository.saveAndFlush(user1);
-		
+
 		Credential credential2 = new Credential();
 		credential2.setUsername("joDoe");
 		credential2.setPassword("5555");
@@ -44,12 +44,11 @@ public class Seeder implements CommandLineRunner {
 		profile2.setFirstName("John");
 		profile2.setLastName("Doe");
 		profile2.setPhone("5555555555");
-		User user2= new User();
+		User user2 = new User();
 		user2.setCredential(credential2);
 		user2.setProfile(profile2);
 		user2.setDeleted(false);
 		user2.setJoined(Instant.now().getEpochSecond());
-		user2.setFollower(user1);
 		userRepository.saveAndFlush(user2);
 
 	}
