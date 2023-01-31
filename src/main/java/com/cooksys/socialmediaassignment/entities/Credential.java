@@ -1,5 +1,6 @@
 package com.cooksys.socialmediaassignment.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Credential {
+
+	@Column(nullable = false, unique = true)
 	private String username;
-	
-	private String password; 
+
+	@Column(nullable = false)
+	private String password;
 
 }

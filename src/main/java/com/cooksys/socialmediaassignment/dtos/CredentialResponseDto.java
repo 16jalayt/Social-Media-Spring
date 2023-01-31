@@ -5,10 +5,9 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class UserResponseDto {
+public class CredentialResponseDto {
 
-	private CredentialResponseDto username;
-	private ProfileResponseDto profile;
-	private long joined;
+	private String username;
+	private String password;
 
 }

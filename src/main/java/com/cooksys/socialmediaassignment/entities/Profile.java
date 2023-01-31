@@ -1,5 +1,6 @@
 package com.cooksys.socialmediaassignment.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +9,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Profile {
+
 	private String firstName;
+
 	private String lastName;
+
+	@Column(nullable = false)
 	private String email;
-	private String phone; 
+
+	private String phone;
 
 }
