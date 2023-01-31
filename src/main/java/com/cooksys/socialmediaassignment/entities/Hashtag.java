@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
@@ -25,4 +26,5 @@ public class Hashtag {
 
     @ManyToMany(mappedBy = "hashtags")
     private List<Tweet> tweetsWithHashtag;
+
 }

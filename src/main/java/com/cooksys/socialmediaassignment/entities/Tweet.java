@@ -2,12 +2,12 @@ package com.cooksys.socialmediaassignment.entities;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -96,11 +96,17 @@ public class Tweet {
 
     public void addHashtag(Hashtag hashtag) {
         this.hashtags.add(hashtag);
-        hashtag.getTweets().add(this);
+        List<Tweet> tweets = hashtag.getTweetsWithHashtag();
+        tweets.add(this);
+        hashtag.setTweetsWithHashtag(tweets);
     }
 
     public void removeHashtag(Hashtag hashtag) {
         this.hashtags.remove(hashtag);
-        hashtag.getTweets().remove(this);
+        List<Tweet> tweets = hashtag.getTweetsWithHashtag();
+        tweets.remove(this);
+        hashtag.setTweetsWithHashtag(tweets);
+        //Removes from a copy. Doesn't modify object
+        //hashtag.getTweets().remove(this);
     }
 }
