@@ -48,10 +48,10 @@ public class User {
 	private Set<User> following;
 
 
-	@ManyToMany(mappedBy = "tweetlikes")
-	private Set<Tweet> userLikes;
+	@ManyToMany(mappedBy = "likes")
+	private Set<Tweet> likedTweets;
+	@ManyToMany(mappedBy = "usersMentioned")
+	private Set<Tweet> mentions;
 
-	@ManyToMany(mappedBy = "mentions")
-	private Set<Tweet> userMentions;
 
 }
