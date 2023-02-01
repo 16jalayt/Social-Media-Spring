@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
 
@@ -32,20 +34,22 @@ public class User {
 	private Long id;
 
 	@Column(nullable = false)
-	private Timestamp joined = Timestamp.valueOf(LocalDateTime.now());
+	@CreationTimestamp
+	private Timestamp joined;
 
 	@Embedded
-	private Credentials credential;
+	private Credentials credentials;
 
 	@Embedded
 	private Profile profile;
 
-	private boolean deleted;
+	private boolean deleted = false;
 
 	@OneToMany(mappedBy = "author")
 	private Set<Tweet> tweets;
 
 	@ManyToMany
+	@JoinTable(name = "followers_following")
 	private Set<User> followers;
 
 	@ManyToMany(mappedBy = "followers")
@@ -57,8 +61,6 @@ public class User {
 	private Set<Tweet> likedTweets;
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinTable(name = "mention_mapping", joinColumns = { @JoinColumn(name = "tweet_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "user_id") })
 	private Set<Tweet> mentions;
 
 ////	@ManyToMany(mappedBy = "likes")

@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 		User userToSave = userMapper.userRequestDtoToEntity(userRequestDto);
 		Credentials credentialsToUpdate = credentialsMapper.credentialsDtoToEntity(userRequestDto.getCredentials());
 		userToSave.setDeleted(false);
-		userToSave.setCredential(credentialsToUpdate);
+		userToSave.setCredentials(credentialsToUpdate);
 		System.out.println(userToSave);
 		return userMapper.entityToUserResponseDto(userRepository.saveAndFlush(userToSave));
 	}
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserResponseDto updateUser(UserRequestDto userRequestDto, String username) {
 		User userToUpdate = getUser(username);
-		Credentials credentialsToUpdate = userToUpdate.getCredential();
+		Credentials credentialsToUpdate = userToUpdate.getCredentials();
 		Profile profileToUpdate = userToUpdate.getProfile();
 		User user = userMapper.userRequestDtoToEntity(userRequestDto);
 		Credentials credential = credentialsMapper.credentialsDtoToEntity(userRequestDto.getCredentials());
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
 		if(user.getProfile().getPhone() != null) {
 			profileToUpdate.setPhone(user.getProfile().getPhone());
 		}
-		userToUpdate.setCredential(credentialsToUpdate);
+		userToUpdate.setCredentials(credentialsToUpdate);
 		userToUpdate.setProfile(profileToUpdate);
 		return userMapper.entityToUserResponseDto(userRepository.saveAndFlush(userToUpdate));
 	}

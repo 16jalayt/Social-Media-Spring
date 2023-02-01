@@ -12,7 +12,7 @@ import com.cooksys.socialmediaassignment.entities.User;
 @Mapper(componentModel = "spring", uses = { CredentialsMapper.class, ProfileMapper.class })
 public interface UserMapper {
 
-	@Mapping(target = "username", source = "credential.username")
+	@Mapping(target = "username", source = "credentials.username")
 	UserResponseDto entityToUserResponseDto(User user);
 
 	List<UserResponseDto> entitiesToUserResponseDtos(List<User> users);
