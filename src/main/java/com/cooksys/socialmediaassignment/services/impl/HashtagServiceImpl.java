@@ -2,6 +2,7 @@ package com.cooksys.socialmediaassignment.services.impl;
 
 import java.util.List;
 
+import com.cooksys.socialmediaassignment.entities.Hashtag;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.socialmediaassignment.dtos.HashtagResponseDto;
@@ -24,22 +25,17 @@ public class HashtagServiceImpl implements HashtagService {
 	private final TweetMapper tweetMapper;
 
 	@Override
-	public HashtagResponseDto validateTagExists(String label) {
-		return hashtagMapper.entityToDto(hashtagRepository.findByLabel(label));
-	}
-
-	@Override
 	public List<HashtagResponseDto> getAllTags() {
 		return hashtagMapper.entitiesToDtos(hashtagRepository.findAll());
 	}
 
 	@Override
 	public List<TweetResponseDto> getTweetsWithTag(String label) {
-		// List<Tweet> tweets = tweetRepository.findTweetsbyHashtag(label);
-		// List<Tweet> tweets = tweetRepository.findAll();
-		// List<Tweet> results = new ArrayList<>();
-
-		// return tweetMapper.entitiesToDtos(results);
-		return null;
+		Hashtag result = hashtagRepository.findByLabel(label);
+		//TODO:Error handling
+		if(result == null)
+			return null;
+		else
+			return tweetMapper.entitiesToDtos(result.getTweetsWithHashtag());
 	}
 }

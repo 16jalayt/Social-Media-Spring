@@ -4,27 +4,22 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
+@Data
+@Table(name = "tweet")
 public class Tweet {
     @Id
     @GeneratedValue
     private Long id;
     
-    private Integer author; 
+    private Long author;
     
     @CreationTimestamp
     private Timestamp posted; 
