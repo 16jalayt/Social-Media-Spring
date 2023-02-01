@@ -1,112 +1,32 @@
 package com.cooksys.socialmediaassignment.entities;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.hibernate.annotations.CreationTimestamp;
+import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
-@JsonIgnoreProperties({"reposts", "repostOf", "hashtags", "author", "usersMentioned", "likes", "replies", "inReplyTo"})
 public class Tweet {
     @Id
     @GeneratedValue
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-//    @Column(nullable = false)
-    private User author;
-
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JoinTable(name = "tweet_hashtag_mapping",
-            joinColumns = {@JoinColumn(name = "hashtag_id")},
-            inverseJoinColumns = {@JoinColumn(name = "tweet_id")}
-    )
-    private Set<Hashtag> hashtags = new HashSet<>();
-
-    @ManyToMany(mappedBy = "mentions")
-    private Set<User> usersMentioned = new HashSet<>();
-
-    @ManyToMany(mappedBy = "likedTweets")
-    private Set<User> likes = new HashSet<>();
-
-    @OneToMany(mappedBy = "repostOf")
-    private Set<Tweet> reposts = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "repost_id")
-    private Tweet repostOf;
-
-    @OneToMany(mappedBy = "inReplyTo")
-    private Set<Tweet> replies = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "reply_to_id")
-    private Tweet inReplyTo;
-
-    private String content;
-
+    
+    private Integer author; 
+    
+    private Timestamp posted; 
+    
     private boolean deleted;
-
-    @Column(name = "created_on")
-    @CreationTimestamp
-    private Date posted;
-
-    public void addMentionedUser(User user) {
-        this.usersMentioned.add(user);
-        user.getMentions().add(this);
-    }
-
-    public void removeMentionedUser(User user) {
-        this.usersMentioned.remove(user);
-        user.getMentions().remove(this);
-    }
-
-    public void addLike(User user) {
-        this.likes.add(user);
-        user.getLikedTweets().add(this);
-    }
-
-    public void removeLike(User user) {
-        this.likes.add(user);
-        user.getLikedTweets().remove(this);
-    }
-
-    public void addHashtag(Hashtag hashtag) {
-        this.hashtags.add(hashtag);
-        List<Tweet> tweets = hashtag.getTweetsWithHashtag();
-        tweets.add(this);
-        hashtag.setTweetsWithHashtag(tweets);
-    }
-
-    public void removeHashtag(Hashtag hashtag) {
-        this.hashtags.remove(hashtag);
-        List<Tweet> tweets = hashtag.getTweetsWithHashtag();
-        tweets.remove(this);
-        hashtag.setTweetsWithHashtag(tweets);
-        //Removes from a copy. Doesn't modify object
-        //hashtag.getTweets().remove(this);
-    }
+    
+   // private Varchar content;
+    
+    private Integer inReplyTo;
+    
+    private Integer repostOf;
 }

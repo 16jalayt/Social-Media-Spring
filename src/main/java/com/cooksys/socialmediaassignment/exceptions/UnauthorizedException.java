@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class UnauthorizedException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3766412180747480588L;
 
     private String message;
 }
