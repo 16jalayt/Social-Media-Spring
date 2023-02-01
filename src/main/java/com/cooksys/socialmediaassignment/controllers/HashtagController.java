@@ -25,6 +25,8 @@ public class HashtagController {
     public List<HashtagResponseDto> getAllTags() {
         return hashtagService.getAllTags();
     }
+
+    //TODO:throw error if not found
     @RequestMapping(value = "/{label}")
     @GetMapping
     public List<TweetResponseDto> getTweetsWithTag(@PathVariable("label") String label) {
