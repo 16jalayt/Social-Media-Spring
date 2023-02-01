@@ -19,7 +19,7 @@ public class ValidateServiceImpl implements ValidateService {
 	private final UserMapper userMapper;
 
 	private boolean checkUsername(String username) {
-		Optional<User> optionalUser = userRepository.findUserByCredentialUsernameAndDeletedFalse(username);
+		Optional<User> optionalUser = userRepository.findUserByCredentialsUsernameAndDeletedFalse(username);
 
 		if (optionalUser.isEmpty()) {
 			return false;

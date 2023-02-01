@@ -18,4 +18,6 @@ public interface UserService {
 
 	UserResponseDto updateUser(UserRequestDto userRequestDto, String username);
 
+	void createFollower(String username, CredentialsDto credentialsDto);
+
 }

@@ -1,7 +1,6 @@
 package com.cooksys.socialmediaassignment.entities;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -62,15 +61,5 @@ public class User {
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	private Set<Tweet> mentions;
-
-////	@ManyToMany(mappedBy = "likes")
-//	@ManyToMany
-//	@JoinColumn(name = "tweeter_id")
-//	private Set<Tweet> likedTweets;
-//	
-////	@ManyToMany(mappedBy = "usersMentioned")
-//	@ManyToMany
-//	@JoinColumn(name = "tweeter_id")
-//	private Set<Tweet> mentions;
 
 }

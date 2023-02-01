@@ -58,5 +58,13 @@ public class UserController {
 		return userService.updateUser(userRequestDto, username);
 	}
 	
+	//Create follow
+	@PostMapping("/@{username}/follow")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void createFollower(@PathVariable String username, @RequestBody CredentialsDto credentialsDto) {
+	userService.createFollower(username, credentialsDto);
+	}
+
+	
 
 }
