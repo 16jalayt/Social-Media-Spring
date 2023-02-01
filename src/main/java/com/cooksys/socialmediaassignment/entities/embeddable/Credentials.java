@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Data
 @NoArgsConstructor
-public class Credential {
+public class Credentials {
 
 	@Column(nullable = false, unique = true)
 	private String username;

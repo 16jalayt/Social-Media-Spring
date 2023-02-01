@@ -1,6 +1,6 @@
 package com.cooksys.socialmediaassignment.dtos;
 
-import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
+import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class TweetRequestDto {
-  //  private Varchar content;
-    private Credential credentials;
+    //private String content;
+    private Credentials credentials;
 }
