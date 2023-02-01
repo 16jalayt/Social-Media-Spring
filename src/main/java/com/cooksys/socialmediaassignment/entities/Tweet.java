@@ -65,9 +65,6 @@ public class Tweet {
     	)
     private Set<User> mentions; 
     
-    
-    
    
-    
    
 }
