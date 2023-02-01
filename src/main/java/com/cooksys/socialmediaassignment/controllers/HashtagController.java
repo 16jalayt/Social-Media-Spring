@@ -17,24 +17,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/tags")
 public class HashtagController {
-	private final HashtagService hashtagService;
 
-	@RequestMapping(value = "/validate/tag/exists/{label}")
-	@GetMapping
-	public HashtagResponseDto validateTagExists(@PathVariable("label") String label) {
-		return hashtagService.validateTagExists(label);
-	}
 
-	@RequestMapping(value = "/tags")
-	@GetMapping
-	public List<HashtagResponseDto> getAllTags() {
-		return hashtagService.getAllTags();
-	}
+    private final HashtagService hashtagService;
 
-	@RequestMapping(value = "/tags/{label}")
-	@GetMapping
-	public List<TweetResponseDto> getTweetsWithTag(@PathVariable("label") String label) {
-		return hashtagService.getTweetsWithTag(label);
-	}
+    @GetMapping
+    public List<HashtagResponseDto> getAllTags() {
+        return hashtagService.getAllTags();
+    }
+    @RequestMapping(value = "/{label}")
+    @GetMapping
+    public List<TweetResponseDto> getTweetsWithTag(@PathVariable("label") String label) {
+        return hashtagService.getTweetsWithTag(label);
+    }
 
 }

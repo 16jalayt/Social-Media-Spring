@@ -7,6 +7,8 @@ import com.cooksys.socialmediaassignment.dtos.TweetRequestDto;
 import com.cooksys.socialmediaassignment.dtos.TweetResponseDto;
 import com.cooksys.socialmediaassignment.dtos.UserResponseDto;
 import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 public interface TweetService {
 	List<TweetResponseDto> getActiveTweets();
@@ -37,5 +39,7 @@ public interface TweetService {
 
 	List<TweetResponseDto> getTweetsByMention(String username);
 
-	List<TweetResponseDto> getUserFeed(String username);
+    List<TweetResponseDto> getUserFeed(String username);
+    List<HashtagResponseDto> getHashtagsbyTweetById(Long id);
+
 }
