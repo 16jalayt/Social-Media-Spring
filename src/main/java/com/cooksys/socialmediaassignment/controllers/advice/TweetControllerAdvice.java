@@ -14,7 +14,7 @@ import com.cooksys.socialmediaassignment.exceptions.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 
 
-@ControllerAdvice(basePackages = { "com.socialmediaassignment.team3.controllers" })
+@ControllerAdvice(basePackages = { "com.socialmediaassignment.controllers" })
 @ResponseBody
 public class TweetControllerAdvice {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
