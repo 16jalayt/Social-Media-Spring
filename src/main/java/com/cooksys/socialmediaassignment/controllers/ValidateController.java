@@ -1,5 +1,6 @@
 package com.cooksys.socialmediaassignment.controllers;
 
+
 import com.cooksys.socialmediaassignment.dtos.HashtagResponseDto;
 import com.cooksys.socialmediaassignment.services.HashtagService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,12 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/validate")
+
 public class ValidateController {
 
 	private final UserService userService;
 	private final HashtagService hashtagService;
+
 
 	@GetMapping("/username/exists/@{username}")
 	public boolean checkUserByUsername(@PathVariable String username) {
