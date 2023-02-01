@@ -9,7 +9,7 @@ import com.cooksys.socialmediaassignment.dtos.UserRequestDto;
 import com.cooksys.socialmediaassignment.dtos.UserResponseDto;
 import com.cooksys.socialmediaassignment.entities.User;
 
-@Mapper(componentModel = "spring", uses = { CredentialMapper.class, ProfileMapper.class })
+@Mapper(componentModel = "spring", uses = { CredentialsMapper.class, ProfileMapper.class })
 public interface UserMapper {
 
 	@Mapping(target = "username", source = "credential.username")
