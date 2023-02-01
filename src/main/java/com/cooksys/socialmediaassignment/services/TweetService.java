@@ -6,36 +6,36 @@ import com.cooksys.socialmediaassignment.dtos.ContextResponseDto;
 import com.cooksys.socialmediaassignment.dtos.TweetRequestDto;
 import com.cooksys.socialmediaassignment.dtos.TweetResponseDto;
 import com.cooksys.socialmediaassignment.dtos.UserResponseDto;
-import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
+import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 
 public interface TweetService {
-    List<TweetResponseDto> getActiveTweets();
+	List<TweetResponseDto> getActiveTweets();
 
-    TweetResponseDto getTweetById(Long id);
+	TweetResponseDto getTweetById(Long id);
 
-    TweetResponseDto createTweet(TweetRequestDto tweetRequestDto);
+	TweetResponseDto createTweet(TweetRequestDto tweetRequestDto);
 
-    void likeTweetById(Long id, Credential credential);
+	void likeTweetById(Long id, Credentials credential);
 
-    ContextResponseDto getContextForTweet(Long id);
+	ContextResponseDto getContextForTweet(Long id);
 
-    TweetResponseDto deleteTweetById(Long id, Credential credential);
+	TweetResponseDto deleteTweetById(Long id, Credentials credential);
 
-    TweetResponseDto repostTweetById(Long id, Credential credential);
+	TweetResponseDto repostTweetById(Long id, Credentials credential);
 
-    List<TweetResponseDto> getRepostOfTweetById(Long id);
+	List<TweetResponseDto> getRepostOfTweetById(Long id);
 
-    TweetResponseDto replyTweetById(Long id, TweetRequestDto tweetRequestDto);
+	TweetResponseDto replyTweetById(Long id, TweetRequestDto tweetRequestDto);
 
-    List<TweetResponseDto> getRepliesToTweetById(Long id);
+	List<TweetResponseDto> getRepliesToTweetById(Long id);
 
-    List<UserResponseDto> getMentionInTweetById(Long id);
+	List<UserResponseDto> getMentionInTweetById(Long id);
 
-    List<UserResponseDto> getLikeForTweet(Long id);
+	List<UserResponseDto> getLikeForTweet(Long id);
 
-    List<TweetResponseDto> getUserTweets(String username);
+	List<TweetResponseDto> getUserTweets(String username);
 
-    List<TweetResponseDto> getTweetsByMention(String username);
+	List<TweetResponseDto> getTweetsByMention(String username);
 
-    List<TweetResponseDto> getUserFeed(String username);
+	List<TweetResponseDto> getUserFeed(String username);
 }

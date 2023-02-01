@@ -1,5 +1,6 @@
 package com.cooksys.socialmediaassignment.mappers;
 
+
 import com.cooksys.socialmediaassignment.dtos.HashtagResponseDto;
 import com.cooksys.socialmediaassignment.entities.Hashtag;
 import org.mapstruct.Mapper;

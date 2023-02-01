@@ -3,18 +3,20 @@ package com.cooksys.socialmediaassignment;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.cooksys.socialmediaassignment.repositories.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
 public class Seeder implements CommandLineRunner {
 
-	//private final UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
 
-//		Credential credential1 = new Credential();
+//		Credentials credential1 = new Credentials();
 //		credential1.setUsername("jDoe");
 //		credential1.setPassword("1234");
 //		Profile profile1 = new Profile();
@@ -26,9 +28,10 @@ public class Seeder implements CommandLineRunner {
 //		user1.setCredential(credential1);
 //		user1.setProfile(profile1);
 //		user1.setDeleted(false);
+//		user1.setJoined(Timestamp.valueOf(LocalDateTime.now()));
 //		userRepository.saveAndFlush(user1);
 //
-//		Credential credential2 = new Credential();
+//		Credentials credential2 = new Credentials();
 //		credential2.setUsername("joDoe");
 //		credential2.setPassword("5555");
 //		Profile profile2 = new Profile();
@@ -40,7 +43,7 @@ public class Seeder implements CommandLineRunner {
 //		user2.setCredential(credential2);
 //		user2.setProfile(profile2);
 //		user2.setDeleted(false);
-//
+//		user2.setJoined(Timestamp.valueOf(LocalDateTime.now()));
 //		userRepository.saveAndFlush(user2);
 
 	}

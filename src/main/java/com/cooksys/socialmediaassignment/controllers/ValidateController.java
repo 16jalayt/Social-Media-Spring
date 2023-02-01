@@ -5,20 +5,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cooksys.socialmediaassignment.services.UserService;
+import com.cooksys.socialmediaassignment.services.ValidateService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/validate")
-public class ValidateUserController {
+public class ValidateController {
 
-	private final UserService userService;
+	private final ValidateService validateService;
 
 	@GetMapping("/username/exists/@{username}")
 	public boolean checkUserByUsername(@PathVariable String username) {
-		return userService.checkUserByUsername(username);
+		return validateService.checkUserByUsername(username);
 	}
 
 }

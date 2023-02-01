@@ -2,6 +2,7 @@ package com.cooksys.socialmediaassignment.services;
 
 import java.util.List;
 
+import com.cooksys.socialmediaassignment.dtos.UserRequestDto;
 import com.cooksys.socialmediaassignment.dtos.UserResponseDto;
 
 public interface UserService {
@@ -12,6 +13,7 @@ public interface UserService {
 	UserResponseDto getUserByUsername(String username);
 
 
-	boolean checkUserByUsername(String username);
+	UserResponseDto createUser(UserRequestDto userRequestDto);
+
 
 }
