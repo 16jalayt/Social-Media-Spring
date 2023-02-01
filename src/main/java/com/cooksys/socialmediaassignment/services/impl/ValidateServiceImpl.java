@@ -18,14 +18,25 @@ public class ValidateServiceImpl implements ValidateService {
 	private final UserRepository userRepository;
 	private final UserMapper userMapper;
 
-	@Override
-	public boolean checkUserByUsername(String username) {
+	private boolean checkUsername(String username) {
 		Optional<User> optionalUser = userRepository.findUserByCredentialUsernameAndDeletedFalse(username);
 
 		if (optionalUser.isEmpty()) {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public boolean checkUserByUsername(String username) {
+
+		return checkUsername(username);
+	}
+
+	@Override
+	public boolean checkUsernameAvailability(String username) {
+
+		return !(checkUsername(username));
 	}
 
 }

@@ -8,6 +8,6 @@ import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 @Mapper(componentModel = "spring")
 public interface CredentialsMapper {
 
-	Credentials CredentialRequestDtoToEntity(CredentialsDto credentialRequestDto);
+	Credentials credentialsDtoToEntity(CredentialsDto credentialsDto);
 
 }

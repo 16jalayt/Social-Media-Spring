@@ -1,8 +1,14 @@
 package com.cooksys.socialmediaassignment;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.cooksys.socialmediaassignment.entities.User;
+import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
+import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
 import com.cooksys.socialmediaassignment.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -11,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Seeder implements CommandLineRunner {
 
-	private final UserRepository userRepository;
+//	private final UserRepository userRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
