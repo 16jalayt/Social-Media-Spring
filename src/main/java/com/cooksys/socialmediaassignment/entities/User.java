@@ -60,7 +60,7 @@ public class User {
 			@JoinColumn(name = "user_id") })
 	private Set<Tweet> likedTweets;
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "mentions", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	private Set<Tweet> mentions;
 
 ////	@ManyToMany(mappedBy = "likes")
