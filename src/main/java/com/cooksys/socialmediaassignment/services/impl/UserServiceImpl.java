@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 	// Get the user information by username
 	private User getUser(String username) {
 
-		Optional<User> optionalUser = userRepository.findUserByCredentialUsernameAndDeletedFalse(username);
+		Optional<User> optionalUser = userRepository.findUserByCredentialsUsernameAndDeletedFalse(username);
 
 		if (optionalUser.isEmpty()) {
 			throw new NotFoundException("No user found with username: " + username);
