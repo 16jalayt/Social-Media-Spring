@@ -4,7 +4,6 @@ package com.cooksys.socialmediaassignment;
 import com.cooksys.socialmediaassignment.entities.Hashtag;
 import com.cooksys.socialmediaassignment.entities.Tweet;
 import com.cooksys.socialmediaassignment.entities.User;
-import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
 import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
 import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
 import com.cooksys.socialmediaassignment.repositories.TweetRepository;
@@ -13,10 +12,7 @@ import com.cooksys.socialmediaassignment.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.cooksys.socialmediaassignment.entities.User;
 import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
-import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
-import com.cooksys.socialmediaassignment.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,7 +35,7 @@ public class Seeder implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Credential credential1 = new Credential();
+		Credentials credential1 = new Credentials();
 		credential1.setUsername("jDoe");
 		credential1.setPassword("1234");
 		Profile profile1 = new Profile();
@@ -53,7 +49,7 @@ public class Seeder implements CommandLineRunner {
 		user1.setDeleted(false);
 		userRepository.saveAndFlush(user1);
 
-		Credential credential2 = new Credential();
+		Credentials credential2 = new Credentials();
 		credential2.setUsername("joDoe");
 		credential2.setPassword("5555");
 		Profile profile2 = new Profile();

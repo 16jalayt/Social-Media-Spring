@@ -11,7 +11,7 @@ import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 
 @Mapper(componentModel = "spring")
 public interface TweetMapper {
-    @Mapping(source = "author.credential", target = "author.username")
+    @Mapping(source = "author.credentials", target = "author.username")
     TweetResponseDto entityToDto(Tweet entity);
 
     List<TweetResponseDto> entitiesToDtos (List<Tweet> entities);

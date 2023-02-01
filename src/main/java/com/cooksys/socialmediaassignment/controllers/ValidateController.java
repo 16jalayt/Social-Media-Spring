@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class ValidateController {
 
 	private final ValidateService validateService;
+	private final HashtagService hashtagService;
 
 	@GetMapping("/username/exists/@{username}")
 	public boolean checkUserByUsername(@PathVariable String username) {
@@ -24,8 +25,10 @@ public class ValidateController {
 	}
 	
 	@GetMapping("/username/available/@{username}")
-	public boolean checkUsernameAvailability(@PathVariable String username) {
+	public boolean checkUsernameAvailability(@PathVariable String username)
+	{
 		return validateService.checkUsernameAvailability(username);
+	}
 
 	@RequestMapping(value = "/tag/exists/{label}")
 	@GetMapping

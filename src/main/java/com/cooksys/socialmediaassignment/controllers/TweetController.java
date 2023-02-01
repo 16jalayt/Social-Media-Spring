@@ -4,16 +4,10 @@ package com.cooksys.socialmediaassignment.controllers;
 import java.util.List;
 
 import com.cooksys.socialmediaassignment.dtos.*;
+import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
 import com.cooksys.socialmediaassignment.services.TweetService;
 
 import lombok.RequiredArgsConstructor;
@@ -42,7 +36,7 @@ public class TweetController {
     }
 
     @PostMapping("/{id}/like")
-    public void likeTweetById(@PathVariable Long id, @RequestBody Credential credential) {
+    public void likeTweetById(@PathVariable Long id, @RequestBody Credentials credential) {
         tweetService.likeTweetById(id, credential);
     }
 
@@ -57,13 +51,13 @@ public class TweetController {
     }
 
     @DeleteMapping("/{id}")
-    public TweetResponseDto deleteTweetById(@PathVariable Long id, @RequestBody Credential credential) {
+    public TweetResponseDto deleteTweetById(@PathVariable Long id, @RequestBody Credentials credential) {
         return tweetService.deleteTweetById(id, credential);
     }
 
     @PostMapping("/{id}/repost")
     @ResponseStatus(HttpStatus.CREATED)
-    public TweetResponseDto repostTweetById(@PathVariable Long id, @RequestBody Credential credential) {
+    public TweetResponseDto repostTweetById(@PathVariable Long id, @RequestBody Credentials credential) {
         return tweetService.repostTweetById(id, credential);
     }
 
