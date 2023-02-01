@@ -100,6 +100,14 @@ public class UserServiceImpl implements UserService {
 			throw new UnauthorizedException("Do not match username or/and password");
 		}
 	}
+	
+	private void validateUserAuthentication(User user1, User user2) {
+		if ((!user1.getCredentials().getUsername().equals(user2.getCredentials().getUsername()))
+				|| (!user1.getCredentials().getPassword().equals(user2.getCredentials().getPassword()))) {
+	
+			throw new UnauthorizedException("Do not match username or/and password");
+		}
+	}
 
 	@Override
 	public List<UserResponseDto> getAllUsers() {
@@ -135,15 +143,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserResponseDto updateUser(UserRequestDto userRequestDto, String username) {
+		validateUserRequest(userRequestDto);
 		User userToUpdate = getUser(username);
 		User user = userMapper.userRequestDtoToEntity(userRequestDto);
+		validateUserAuthentication(userToUpdate, user);
 		
-		if (user.getCredentials().getPassword() != null) {
-			userToUpdate.getCredentials().setPassword(user.getCredentials().getPassword());
-		}
-		if (user.getCredentials().getUsername() != null) {
-			userToUpdate.getCredentials().setUsername(user.getCredentials().getUsername());
-		}
+//		if (user.getCredentials().getPassword() != null) {
+//			userToUpdate.getCredentials().setPassword(user.getCredentials().getPassword());
+//		}
 		if (user.getProfile().getEmail() != null) {
 			userToUpdate.getProfile().setEmail(user.getProfile().getEmail());
 		}
@@ -164,6 +171,7 @@ public class UserServiceImpl implements UserService {
 	public void createFollower(String username, CredentialsDto credentialsDto) {
 		User follower = getUser(username);
 		User following = getUser(credentialsDto.getUsername());
+		System.out.println(follower);
 		validateFollow(follower, following);
 		userRepository.saveAndFlush(follower);
 		userRepository.saveAndFlush(following);
