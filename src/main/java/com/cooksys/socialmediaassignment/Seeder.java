@@ -1,5 +1,6 @@
 package com.cooksys.socialmediaassignment;
 
+
 import com.cooksys.socialmediaassignment.entities.Hashtag;
 import com.cooksys.socialmediaassignment.entities.Tweet;
 import com.cooksys.socialmediaassignment.entities.User;
@@ -8,8 +9,14 @@ import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
 import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
 import com.cooksys.socialmediaassignment.repositories.TweetRepository;
 import com.cooksys.socialmediaassignment.repositories.UserRepository;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import com.cooksys.socialmediaassignment.entities.User;
+import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
+import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
+import com.cooksys.socialmediaassignment.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,9 +30,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Seeder implements CommandLineRunner {
 
+
 	private final UserRepository userRepository;
 	private final TweetRepository tweetRepository;
 	private final HashtagRepository hashtagRepository;
+
 
 	@Override
 	public void run(String... args) throws Exception {

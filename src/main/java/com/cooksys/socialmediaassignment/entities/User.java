@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
+import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
 
 import jakarta.persistence.CascadeType;
@@ -35,7 +35,7 @@ public class User {
 	private Timestamp joined = Timestamp.valueOf(LocalDateTime.now());
 
 	@Embedded
-	private Credential credential;
+	private Credentials credential;
 
 	@Embedded
 	private Profile profile;
@@ -51,21 +51,16 @@ public class User {
 	@ManyToMany(mappedBy = "followers")
 	private Set<User> following;
 
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinTable(name = "tweet_liked_mapping", joinColumns = { @JoinColumn(name = "tweet_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "user_id") })
+	private Set<Tweet> likedTweets;
 
-	 @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	    @JoinTable(name = "tweet_liked_mapping",
-	            joinColumns = {@JoinColumn(name = "tweet_id")},
-	            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-	    )
-	 private Set<Tweet> likedTweets;
-	 
-	 @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	    @JoinTable(name = "mention_mapping",
-	            joinColumns = {@JoinColumn(name = "tweet_id")},
-	            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-	    )
-	 private Set<Tweet> mentions;
-	 
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinTable(name = "mention_mapping", joinColumns = { @JoinColumn(name = "tweet_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "user_id") })
+	private Set<Tweet> mentions;
+
 ////	@ManyToMany(mappedBy = "likes")
 //	@ManyToMany
 //	@JoinColumn(name = "tweeter_id")
@@ -75,6 +70,5 @@ public class User {
 //	@ManyToMany
 //	@JoinColumn(name = "tweeter_id")
 //	private Set<Tweet> mentions;
-
 
 }

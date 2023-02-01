@@ -1,15 +1,15 @@
 package com.cooksys.socialmediaassignment.services;
 
+import java.util.List;
+
 import com.cooksys.socialmediaassignment.dtos.HashtagResponseDto;
 import com.cooksys.socialmediaassignment.dtos.TweetResponseDto;
 
-import java.util.List;
-
 public interface HashtagService {
 
-    HashtagResponseDto validateTagExists(String label);
+	HashtagResponseDto validateTagExists(String label);
 
-    List<HashtagResponseDto> getAllTags();
+	List<HashtagResponseDto> getAllTags();
 
-    List<TweetResponseDto> getTweetsWithTag(String label);
+	List<TweetResponseDto> getTweetsWithTag(String label);
 }

@@ -1,5 +1,6 @@
 package com.cooksys.socialmediaassignment.controllers;
 
+
 import java.util.List;
 
 import com.cooksys.socialmediaassignment.dtos.*;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/tweets")
 public class TweetController {
+
     private final TweetService tweetService;
 
     @GetMapping
