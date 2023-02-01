@@ -36,13 +36,13 @@ public class Seeder implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		Credentials credential1 = new Credentials();
-		credential1.setUsername("jDoe");
-		credential1.setPassword("1234");
+		credential1.setUsername("mboren");
+		credential1.setPassword("password");
 		Profile profile1 = new Profile();
-		profile1.setEmail("jdow@gmail.com");
-		profile1.setFirstName("Jane");
-		profile1.setLastName("Doe");
-		profile1.setPhone("1231231234");
+		profile1.setEmail("mboren@cooksys.com");
+		profile1.setFirstName("Michael");
+		profile1.setLastName("Boren");
+		profile1.setPhone("(901)907-7909");
 		User user1 = new User();
 		user1.setCredentials(credential1);
 		user1.setProfile(profile1);
@@ -50,13 +50,13 @@ public class Seeder implements CommandLineRunner {
 		userRepository.saveAndFlush(user1);
 
 		Credentials credential2 = new Credentials();
-		credential2.setUsername("joDoe");
-		credential2.setPassword("5555");
+		credential2.setUsername("wmarttala");
+		credential2.setPassword("password");
 		Profile profile2 = new Profile();
-		profile2.setEmail("jdoe@gmail.com");
-		profile2.setFirstName("John");
-		profile2.setLastName("Doe");
-		profile2.setPhone("5555555555");
+		profile2.setEmail("wmarttala@cooksys.com");
+		profile2.setFirstName("Will");
+		profile2.setLastName("Marttala");
+		profile2.setPhone("wmarttala@cooksys.com");
 		User user2 = new User();
 		user2.setCredentials(credential2);
 		user2.setProfile(profile2);
@@ -66,7 +66,7 @@ public class Seeder implements CommandLineRunner {
 		Tweet tweet = new Tweet();
 		tweet.setDeleted(false);
 		tweet.setAuthor(user1.getId());
-		tweet.setContent("I'm on vaction today. #test");
+		tweet.setContent("Tweet from the first user! @wmarttala #weAreNumber1");
 		List<User> likedBy = new ArrayList<>();
 		likedBy.add(user2);
         tweet.setLikedByUsers(likedBy);
@@ -78,7 +78,7 @@ public class Seeder implements CommandLineRunner {
 		Tweet tweet2 = new Tweet();
 		tweet2.setDeleted(false);
 		tweet2.setAuthor(user2.getId());
-		tweet2.setContent("That is so cool! #test");
+		tweet2.setContent("Tweet from the second user! @mboren #youAreNumber1");
         List<User> likedBy2 = new ArrayList<>();
 		likedBy2.add(user1);
 		likedBy2.add(user2);
@@ -87,23 +87,32 @@ public class Seeder implements CommandLineRunner {
 		Set<User> mentioned2 = new HashSet<>();
 		mentioned2.add(user1);
 		tweet2.setMentions(mentioned2);
-		tweet2.setInReplyTo(tweet2);
+		tweet2.setInReplyTo(tweet);
 
 		tweetRepository.saveAndFlush(tweet);
 		tweetRepository.saveAndFlush(tweet2);
+
+		//IMPORTANT: saving tweets a second time crashes
 
 //		List<Tweet> replies = new ArrayList<>();
 //		replies.add(tweet);
 //		tweet.setReplies(replies);
 
-		/*Hashtag hashtag = new Hashtag();
-		hashtag.setLabel("#test");
+		Hashtag hashtag = new Hashtag();
+		hashtag.setLabel("weAreNumber1");
 		hashtagRepository.saveAndFlush(hashtag);
 		List<Tweet> tweetsWithHashtag = new ArrayList<>();
 		tweetsWithHashtag.add(tweet);
-		tweetsWithHashtag.add(tweet2);
 		hashtag.setTweetsWithHashtag(tweetsWithHashtag);
-		hashtagRepository.saveAndFlush(hashtag);*/
+		hashtagRepository.saveAndFlush(hashtag);
+
+		Hashtag hashtag2 = new Hashtag();
+		hashtag2.setLabel("youAreNumber1");
+		hashtagRepository.saveAndFlush(hashtag2);
+		List<Tweet> tweetsWithHashtag2 = new ArrayList<>();
+		tweetsWithHashtag2.add(tweet2);
+		hashtag2.setTweetsWithHashtag(tweetsWithHashtag2);
+		hashtagRepository.saveAndFlush(hashtag2);
 
         //List<Hashtag> hashtagList = new ArrayList<>();
 		//hashtagList.add(hashtag);

@@ -32,8 +32,8 @@ public class ValidateController {
 
 	@RequestMapping(value = "/tag/exists/{label}")
 	@GetMapping
-	public HashtagResponseDto validateTagExists(@PathVariable("label") String label) {
-		return hashtagService.validateTagExists(label);
+	public boolean validateTagExists(@PathVariable("label") String label) {
+		return validateService.validateTagExists(label);
 	}
 
 }

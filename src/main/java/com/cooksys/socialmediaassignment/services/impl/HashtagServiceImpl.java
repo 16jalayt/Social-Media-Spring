@@ -24,11 +24,6 @@ public class HashtagServiceImpl implements HashtagService {
 	private final TweetMapper tweetMapper;
 
 	@Override
-	public HashtagResponseDto validateTagExists(String label) {
-		return hashtagMapper.entityToDto(hashtagRepository.findByLabel(label));
-	}
-
-	@Override
 	public List<HashtagResponseDto> getAllTags() {
 		return hashtagMapper.entitiesToDtos(hashtagRepository.findAll());
 	}
