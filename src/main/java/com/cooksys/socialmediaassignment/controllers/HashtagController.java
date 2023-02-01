@@ -16,19 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/tags")
 public class HashtagController {
+
     private final HashtagService hashtagService;
 
-    @RequestMapping(value = "/validate/tag/exists/{label}")
-    @GetMapping
-    public HashtagResponseDto validateTagExists(@PathVariable("label") String label) {
-        return hashtagService.validateTagExists(label);
-    }
-    @RequestMapping(value = "/tags")
     @GetMapping
     public List<HashtagResponseDto> getAllTags() {
         return hashtagService.getAllTags();
     }
-    @RequestMapping(value = "/tags/{label}")
+    @RequestMapping(value = "/{label}")
     @GetMapping
     public List<TweetResponseDto> getTweetsWithTag(@PathVariable("label") String label) {
         return hashtagService.getTweetsWithTag(label);

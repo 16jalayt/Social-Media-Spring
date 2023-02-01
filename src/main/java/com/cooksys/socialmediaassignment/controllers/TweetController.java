@@ -2,6 +2,7 @@ package com.cooksys.socialmediaassignment.controllers;
 
 import java.util.List;
 
+import com.cooksys.socialmediaassignment.dtos.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cooksys.socialmediaassignment.dtos.ContextResponseDto;
-import com.cooksys.socialmediaassignment.dtos.TweetRequestDto;
-import com.cooksys.socialmediaassignment.dtos.TweetResponseDto;
-import com.cooksys.socialmediaassignment.dtos.UserResponseDto;
 import com.cooksys.socialmediaassignment.entities.embeddable.Credential;
 import com.cooksys.socialmediaassignment.services.TweetService;
 
@@ -88,5 +85,9 @@ public class TweetController {
     @GetMapping("/{id}/mentions")
     public List<UserResponseDto> getMentionInTweetById(@PathVariable Long id) {
         return tweetService.getMentionInTweetById(id);
+    }
+    @GetMapping("/{id}/tags")
+    public List<HashtagResponseDto> getHashtagsbyTweetById(@PathVariable Long id) {
+        return null;
     }
 }
