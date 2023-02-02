@@ -3,6 +3,7 @@ package com.cooksys.socialmediaassignment.services.impl;
 import java.util.List;
 
 import com.cooksys.socialmediaassignment.entities.Hashtag;
+import com.cooksys.socialmediaassignment.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.socialmediaassignment.dtos.HashtagResponseDto;
@@ -32,9 +33,8 @@ public class HashtagServiceImpl implements HashtagService {
 	@Override
 	public List<TweetResponseDto> getTweetsWithTag(String label) {
 		Hashtag result = hashtagRepository.findByLabel(label);
-		//TODO:Error handling
 		if(result == null)
-			return null;
+			throw new NotFoundException("No hashtag with that name: "+label);
 		else
 			return tweetMapper.entitiesToDtos(result.getTweetsWithHashtag());
 	}

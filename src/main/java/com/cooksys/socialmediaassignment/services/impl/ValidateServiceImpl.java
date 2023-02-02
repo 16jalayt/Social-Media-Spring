@@ -3,6 +3,7 @@ package com.cooksys.socialmediaassignment.services.impl;
 import java.util.Optional;
 
 import com.cooksys.socialmediaassignment.dtos.HashtagResponseDto;
+import com.cooksys.socialmediaassignment.exceptions.NotFoundException;
 import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,6 @@ public class ValidateServiceImpl implements ValidateService {
 		if( hashtagRepository.findByLabel(label)!=null)
 			return true;
 		else
-			return false;
+			throw new NotFoundException("Hashtag does not exist: "+label);
 	}
 }
