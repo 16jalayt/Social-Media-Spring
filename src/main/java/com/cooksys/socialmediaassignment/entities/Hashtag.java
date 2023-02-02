@@ -33,4 +33,19 @@ public class Hashtag {
     @ManyToMany(mappedBy = "hashtags", cascade=CascadeType.ALL)
     private List<Tweet> tweetsWithHashtag;
 
+    public void addTweet(Tweet tweet) {
+        this.tweetsWithHashtag.add(tweet);
+        tweet.getHashtags().add(this);
+    }
+
+    public void removeTweet(Tweet tweet) {
+        this.tweetsWithHashtag.remove(tweet);
+        tweet.getHashtags().remove(this);
+    }
+
+	public List<Tweet> getTweets() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

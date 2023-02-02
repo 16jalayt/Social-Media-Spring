@@ -11,33 +11,33 @@ import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 
 
 public interface TweetService {
-	List<TweetResponseDto> getActiveTweets();
+    List<TweetResponseDto> getActiveTweets();
 
-	TweetResponseDto getTweetById(Long id);
+    TweetResponseDto getTweetById(Long id);
 
-	TweetResponseDto createTweet(TweetRequestDto tweetRequestDto);
+    TweetResponseDto createTweet(TweetRequestDto tweetRequestDto);
 
-	void likeTweetById(Long id, Credentials credential);
+    void likeTweetById(Long id, Credentials credentials);
 
-	ContextResponseDto getContextForTweet(Long id);
+    ContextResponseDto getContextForTweet(Long id);
 
-	TweetResponseDto deleteTweetById(Long id, Credentials credential);
+    TweetResponseDto deleteTweetById(Long id, Credentials credentials);
 
-	TweetResponseDto repostTweetById(Long id, Credentials credential);
+    TweetResponseDto repostTweetById(Long id, Credentials credentials);
 
-	List<TweetResponseDto> getRepostOfTweetById(Long id);
+    List<TweetResponseDto> getRepostOfTweetById(Long id);
 
-	TweetResponseDto replyTweetById(Long id, TweetRequestDto tweetRequestDto);
+    TweetResponseDto replyTweetById(Long id, TweetRequestDto tweetRequestDto);
 
-	List<TweetResponseDto> getRepliesToTweetById(Long id);
+    List<TweetResponseDto> getRepliesToTweetById(Long id);
 
-	List<UserResponseDto> getMentionInTweetById(Long id);
+    List<UserResponseDto> getMentionInTweetById(Long id);
 
-	List<UserResponseDto> getLikeForTweet(Long id);
+    List<UserResponseDto> getLikeForTweet(Long id);
 
-	List<TweetResponseDto> getUserTweets(String username);
+    List<TweetResponseDto> getUserTweets(String username);
 
-	List<TweetResponseDto> getTweetsByMention(String username);
+    List<TweetResponseDto> getTweetsByMention(String username);
 
     List<TweetResponseDto> getUserFeed(String username);
     

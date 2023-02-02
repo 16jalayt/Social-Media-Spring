@@ -1,6 +1,7 @@
 package com.cooksys.socialmediaassignment.dtos;
 
 import java.sql.Timestamp;
+
 import com.cooksys.socialmediaassignment.entities.Tweet;
 
 import lombok.Data;
@@ -14,6 +15,6 @@ public class TweetResponseDto {
     private Integer author;
    // private Varchar content;
     private Timestamp posted;
-    private Integer inReplyTo;
-    private Integer repostOf;
+    private Tweet inReplyTo;
+    private Tweet repostOf;
 }

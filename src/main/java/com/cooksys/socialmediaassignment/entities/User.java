@@ -63,6 +63,10 @@ public class User {
 	@ManyToMany(mappedBy = "mentions", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	private Set<Tweet> mentions;
 
+	public void addLikedTweet(Tweet tweet) {
+	     this.likedTweets.add(tweet);
+	}
+
 ////	@ManyToMany(mappedBy = "likes")
 //	@ManyToMany
 //	@JoinColumn(name = "tweeter_id")

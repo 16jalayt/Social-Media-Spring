@@ -10,4 +10,10 @@ import lombok.NoArgsConstructor;
 public class TweetRequestDto {
     //private String content;
     private Credentials credentials;
+
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
