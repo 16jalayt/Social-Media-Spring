@@ -98,4 +98,14 @@ public class UserController {
 //		userService.createFollower(username, credentialsDto);
 //	}
 
+	// Get user's mentions
+	@GetMapping("/@{username}/mentions")
+	public List<TweetResponseDto> getMentions(@PathVariable String username) {
+		return userService.getMentions(username);
+	}
+	// Get user's mentions
+	@GetMapping("/@{username}/feed")
+	public List<TweetResponseDto> getFeed(@PathVariable String username) {
+		return userService.getFeed(username);
+	}
 }
