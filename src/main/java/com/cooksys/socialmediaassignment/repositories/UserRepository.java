@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.cooksys.socialmediaassignment.entities.User;
-import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -17,5 +16,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findUserByCredentialsUsernameAndDeletedFalse(String username);
 
 	Optional<User> findUserByCredentialsUsername(String username);
-
 }
+
