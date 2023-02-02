@@ -70,10 +70,10 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public void likeTweetById(Long id, Credentials credentials) {
-        User user = _authorizeCredential(credentials);
-        Tweet tweet = _getActiveTweetById(id);
-        user.addLikedTweet(tweet);
-        userRepository.saveAllAndFlush(user);
+//        User user = _authorizeCredential(credentials);
+//        Tweet tweet = _getActiveTweetById(id);
+//        user.addLikedTweet(tweet);
+//        userRepository.saveAllAndFlush(user);
     }
 
     @Override
@@ -301,7 +301,7 @@ public class TweetServiceImpl implements TweetService {
 //    }
 
     private User _getUserByUsername(String username) {
-        Optional<User> userOptional = userRepository.findByCredentialUsername(username);
+        Optional<User> userOptional = userRepository.findByCredentialsUsername(username);
         if (userOptional.isEmpty())
             return null;
         return userOptional.get();
@@ -311,7 +311,6 @@ public class TweetServiceImpl implements TweetService {
         return tweets.stream().filter(t -> !t.isDeleted()).collect(Collectors.toList());
     }
 
-	@Override
 	public List<HashtagResponseDto> getHashtagsbyTweetById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
