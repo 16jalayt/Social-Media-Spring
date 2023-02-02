@@ -73,8 +73,10 @@ public class Tweet {
     	)
     private Set<User> mentions; 
 	
-    // Methods to call in TweetServiceImpl
-	public void addMentionedUser(User user) {
+    /*
+     * Methods to call in TweetServiceImpl
+     */
+    public void addMentionedUser(User user) {
         this.mentions.add(user);
         user.getMentions().add(this);
     }
@@ -103,14 +105,4 @@ public class Tweet {
         this.hashtags.remove(hashtag);
         hashtag.getTweets().remove(this);
     }
-
-    public Long getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(Long user) {
-		this.author = user;
-	}
-
-   
 }
