@@ -1,36 +1,27 @@
 package com.cooksys.socialmediaassignment;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import com.cooksys.socialmediaassignment.entities.Hashtag;
-import com.cooksys.socialmediaassignment.entities.Tweet;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
 import com.cooksys.socialmediaassignment.entities.User;
+import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
 import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
 import com.cooksys.socialmediaassignment.repositories.TweetRepository;
 import com.cooksys.socialmediaassignment.repositories.UserRepository;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
-import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
-
 import lombok.RequiredArgsConstructor;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class Seeder implements CommandLineRunner {
 
-
 	private final UserRepository userRepository;
 	private final TweetRepository tweetRepository;
 	private final HashtagRepository hashtagRepository;
-
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -47,7 +38,6 @@ public class Seeder implements CommandLineRunner {
 		user1.setCredentials(credential1);
 		user1.setProfile(profile1);
 		user1.setDeleted(false);
-		userRepository.saveAndFlush(user1);
 
 		Credentials credential2 = new Credentials();
 		credential2.setUsername("joDoe");
@@ -62,6 +52,11 @@ public class Seeder implements CommandLineRunner {
 		user2.setProfile(profile2);
 		user2.setDeleted(false);
 		userRepository.saveAndFlush(user2);
+		List<User> follower = new ArrayList<User>();
+		follower.add(user2);
+		user1.setFollowers(follower);
+		user1.setFollowing(follower);
+		userRepository.saveAndFlush(user1);
 
 //		Tweet tweet = new Tweet();
 //		tweet.setDeleted(false);
@@ -110,7 +105,6 @@ public class Seeder implements CommandLineRunner {
 //
 //		tweetRepository.saveAndFlush(tweet);
 //		tweetRepository.saveAndFlush(tweet2);
-
 
 	}
 

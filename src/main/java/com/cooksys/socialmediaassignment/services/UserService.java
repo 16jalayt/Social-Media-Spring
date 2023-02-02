@@ -20,4 +20,8 @@ public interface UserService {
 
 	void createFollower(String username, CredentialsDto credentialsDto);
 
+	List<UserResponseDto> getFollowersByUsername(String username);
+
+	List<UserResponseDto> getFollowingByUsername(String username);
+
 }

@@ -63,7 +63,7 @@ public class Tweet {
     	joinColumns = @JoinColumn(name = "tweet_id"),
     	inverseJoinColumns = @JoinColumn(name = "user_id")
     	)
-    private Set<User> mentions; 
+    private List<User> mentions; 
     
    
    
