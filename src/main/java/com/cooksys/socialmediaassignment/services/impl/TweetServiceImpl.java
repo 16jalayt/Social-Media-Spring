@@ -27,6 +27,7 @@ import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 import com.cooksys.socialmediaassignment.exceptions.BadRequestException;
 import com.cooksys.socialmediaassignment.exceptions.NotFoundException;
 import com.cooksys.socialmediaassignment.exceptions.UnauthorizedException;
+import com.cooksys.socialmediaassignment.mappers.HashtagMapper;
 import com.cooksys.socialmediaassignment.mappers.TweetMapper;
 import com.cooksys.socialmediaassignment.mappers.UserMapper;
 import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
@@ -45,6 +46,7 @@ public class TweetServiceImpl implements TweetService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final HashtagRepository hashtagRepository;
+    private final HashtagMapper hashtagMapper;
 
     @Override
     public List<TweetResponseDto> getActiveTweets() {
@@ -53,6 +55,10 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public TweetResponseDto getTweetById(Long id) {
+    	Tweet tweet = _getActiveTweetById(id);
+    	if(tweet == null) {
+			throw new NotFoundException("No tweet with thta ID: " + id);
+    	} 
         return tweetMapper.entityToDto(_getActiveTweetById(id));
     }
 
@@ -68,17 +74,21 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public void likeTweetById(Long id, Credentials credentials) {
-//        User user = _authorizeCredential(credentials);
-//        Tweet tweet = _getActiveTweetById(id);
-//        List<Tweet> likedTweets = user.getLikedTweets();
-//        likedTweets.add(tweet);
-//        user.setLikedTweets(likedTweets);
-//        userRepository.saveAndFlush(user);
+        Long userId = _authorizeCredential(credentials);
+        User user = userRepository.getReferenceById(userId); 
+        Tweet tweet = _getActiveTweetById(id);
+        List<Tweet> likedTweets = user.getLikedTweets();
+        likedTweets.add(tweet);
+        user.setLikedTweets(likedTweets);
+        userRepository.saveAndFlush(user);
     }
 
     @Override
     public ContextResponseDto getContextForTweet(Long id) {
-        Tweet tweet = _getActiveTweetById(id);
+    	Tweet tweet = _getActiveTweetById(id);
+    	if(tweet == null) {
+			throw new NotFoundException("No tweet with thta ID: " + id);
+    	} 
         ContextResponseDto responseDto = new ContextResponseDto();
         responseDto.setTarget(tweetMapper.entityToDto(tweet));
         responseDto.setBefore(tweetMapper.entitiesToDtos(_getTweetsBefore(tweet)));
@@ -100,8 +110,15 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public TweetResponseDto repostTweetById(Long id, Credentials credentials) {
     	Long user = _authorizeCredential(credentials);
+    	if(user == null) {
+			throw new NotFoundException("Unable to find user");
+    	} 
         Tweet originalTweet = _getActiveTweetById(id);
+      	if(originalTweet == null) {
+    			throw new NotFoundException("No tweet with that ID: " + originalTweet);
+        	} 
         Tweet repostTweet = new Tweet();
+
         repostTweet.setAuthor(user);
         repostTweet.setRepostOf(originalTweet);
         return tweetMapper.entityToDto(tweetRepository.saveAndFlush(repostTweet));
@@ -109,7 +126,10 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public List<TweetResponseDto> getRepostOfTweetById(Long id) {
-        Tweet tweet = _getActiveTweetById(id);
+    	Tweet tweet = _getActiveTweetById(id);
+    	if(tweet == null) {
+			throw new NotFoundException("No tweet with thta ID: " + id);
+    	} 
         return tweetMapper.entitiesToDtos(_activeTweets(tweet.getReposts()));
     }
 
@@ -127,20 +147,29 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public List<TweetResponseDto> getRepliesToTweetById(Long id) {
-        Tweet tweet = _getActiveTweetById(id);
+    public List<TweetResponseDto> getRepliesToTweetById(Long id) {        
+     	Tweet tweet = _getActiveTweetById(id);
+    	if(tweet == null) {
+			throw new NotFoundException("No tweet with thta ID: " + id);
+    	} 
         return tweetMapper.entitiesToDtos(_activeTweets(tweet.getReplies()));
     }
 
     @Override
     public List<UserResponseDto> getMentionInTweetById(Long id) {
-        Tweet tweet = _getActiveTweetById(id);
+     	Tweet tweet = _getActiveTweetById(id);
+    	if(tweet == null) {
+			throw new NotFoundException("No tweet with thta ID: " + id);
+    	} 
         return userMapper.entitiesToUserResponseDtos(tweet.getMentions().stream().filter(u -> !u.isDeleted()).collect(Collectors.toList()));
     }
 
     @Override
     public List<UserResponseDto> getLikeForTweet(Long id) {
-        Tweet tweet = _getActiveTweetById(id);
+     	Tweet tweet = _getActiveTweetById(id);
+    	if(tweet == null) {
+			throw new NotFoundException("No tweet with thta ID: " + id);
+    	} 
         return userMapper.entitiesToUserResponseDtos(tweet.getLikedByUsers().stream().filter(u -> !u.isDeleted()).collect(Collectors.toList()));
     }
 
@@ -193,9 +222,15 @@ public class TweetServiceImpl implements TweetService {
         return tweetMapper.entitiesToDtos(response);
     }
     
-	
+    @Override
+	public List<HashtagResponseDto> getHashtagsbyTweetById(Long id) {
+    	Tweet tweet = _getActiveTweetById(id);
+    	if(tweet == null) {
+			throw new NotFoundException("No tweet with thta ID: " + id);
+    	} 
+    	return hashtagMapper.entitiesToDtos(tweet.getHashtags());  
+	}
 
-	
     /*
      * Methods to call in TweetServiceImpl methods
      */
@@ -308,9 +343,4 @@ public class TweetServiceImpl implements TweetService {
         return tweets.stream().filter(t -> !t.isDeleted()).collect(Collectors.toList());
     }
 
-	@Override
-	public List<HashtagResponseDto> getHashtagsbyTweetById(Long id) {
-	
-		return null;
-	}
 }

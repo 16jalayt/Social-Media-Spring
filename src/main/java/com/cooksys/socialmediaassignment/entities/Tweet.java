@@ -28,7 +28,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties({"reposts", "repostOf", "hashtags", "author", "usersMentioned", "likes", "replies", "inReplyTo"})
-
 public class Tweet {
 
 	@Id
@@ -59,7 +58,7 @@ public class Tweet {
     
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(
-    	name = "tweet_hashtag",
+    	name = "tweet_hashtags",
     	joinColumns = @JoinColumn(name = "tweet_id"),
     	inverseJoinColumns = @JoinColumn(name = "hashtag_id")
     	)
@@ -74,7 +73,6 @@ public class Tweet {
     	joinColumns = @JoinColumn(name = "tweet_id"),
     	inverseJoinColumns = @JoinColumn(name = "user_id")
     	)
-
     private List<User> mentions; 
     
     

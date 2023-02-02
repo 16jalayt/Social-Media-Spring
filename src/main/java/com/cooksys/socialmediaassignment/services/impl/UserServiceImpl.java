@@ -6,13 +6,17 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.socialmediaassignment.dtos.CredentialsDto;
+import com.cooksys.socialmediaassignment.dtos.TweetResponseDto;
 import com.cooksys.socialmediaassignment.dtos.UserRequestDto;
 import com.cooksys.socialmediaassignment.dtos.UserResponseDto;
+import com.cooksys.socialmediaassignment.entities.Tweet;
 import com.cooksys.socialmediaassignment.entities.User;
 import com.cooksys.socialmediaassignment.exceptions.BadRequestException;
 import com.cooksys.socialmediaassignment.exceptions.NotFoundException;
 import com.cooksys.socialmediaassignment.exceptions.UnauthorizedException;
+import com.cooksys.socialmediaassignment.mappers.TweetMapper;
 import com.cooksys.socialmediaassignment.mappers.UserMapper;
+import com.cooksys.socialmediaassignment.repositories.TweetRepository;
 import com.cooksys.socialmediaassignment.repositories.UserRepository;
 import com.cooksys.socialmediaassignment.services.UserService;
 
@@ -24,6 +28,8 @@ public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
 	private final UserMapper userMapper;
+	private final TweetRepository tweetRepository;
+	private final TweetMapper tweetMapper;
 
 	// Get the user information by username
 	private User getUser(String username) {
@@ -60,6 +66,12 @@ public class UserServiceImpl implements UserService {
 			throw new BadRequestException("All fields are required on a user request dto");
 		} else if (userRequestDto.getProfile().getEmail() == null) {
 			throw new BadRequestException("Email is required");
+		} else if (userRequestDto.getProfile().getFirstName() == null) {
+			throw new BadRequestException("First name is required");
+		} else if (userRequestDto.getProfile().getLastName() == null) {
+			throw new BadRequestException("Last name is required");
+		} else if (userRequestDto.getProfile().getPhone() == null) {
+			throw new BadRequestException("Phone number is required");
 		} else if ((userRequestDto.getCredentials().getPassword() == null)
 				|| (userRequestDto.getCredentials().getUsername() == null)) {
 			throw new BadRequestException("Username and Password are required");
@@ -68,41 +80,52 @@ public class UserServiceImpl implements UserService {
 
 	// Validate credentials informaion
 	private void validateCredentialsDto(CredentialsDto credentialDto) {
+		User user = getUser(credentialDto.getUsername());
 		if ((credentialDto.getPassword() == null) || (credentialDto.getUsername() == null)) {
-			throw new BadRequestException("All fields are required on a credentials dto");
+			throw new BadRequestException("Username and password are required");
+		} else if (!user.getCredentials().getUsername().equals(credentialDto.getUsername())) {
+			throw new UnauthorizedException("username is not correct.");
+		} else if (!user.getCredentials().getPassword().equals(credentialDto.getPassword())) {
+			throw new UnauthorizedException("Password is not correct.");
+		}
+	}
+	
+	//Validate user's credential
+	private void validateCredential(User userToCheck) {
+		User user = getUser(userToCheck.getCredentials().getUsername());
+		if ((userToCheck.getCredentials().getPassword() == null) || (userToCheck.getCredentials().getUsername() == null)) {
+			throw new BadRequestException("Username and password are required");
+		} else if (!user.getCredentials().getUsername().equals(userToCheck.getCredentials().getUsername())) {
+			throw new UnauthorizedException("username is not correct.");
+		} else if (!user.getCredentials().getPassword().equals(userToCheck.getCredentials().getPassword())) {
+			throw new UnauthorizedException("username is not correct.");
 		}
 	}
 
 	// Validate follower/following information
-	private void validateFollow(User follower, User following) {
-		if (follower.getFollowers().contains(following)) {
-			throw new BadRequestException("The user: " + following.getCredentials().getUsername()
-					+ " is already following the user: " + follower.getCredentials().getUsername());
+	private void validateFollow(User makiko, User helena) {
+		if (helena.getFollowers().contains(makiko)) {
+			throw new BadRequestException("The user: " + makiko.getCredentials().getUsername()
+					+ " is already following the user: " + helena.getCredentials().getUsername());
 		}
-		List<User> followerSet = follower.getFollowers();
-		followerSet.add(following);
-		List<User> followingSet = following.getFollowing();
-		followingSet.add(follower);
-		follower.setFollowers(followerSet);
-		following.setFollowing(followingSet);
+
+		helena.getFollowers().add(makiko);
+		userRepository.saveAndFlush(helena);
 
 	}
 
-	private void validateAuthentication(User user, CredentialsDto credentialDto) {
-		if ((!user.getCredentials().getUsername().equals(credentialDto.getUsername()))
-				|| (!user.getCredentials().getPassword().equals(credentialDto.getPassword()))) {
-
-			throw new UnauthorizedException("Do not match username or/and password");
+	// Unfollow user
+	private void unFollowUser(User helena, User makiko) {
+		if (!helena.getFollowers().contains(makiko)) {
+			throw new BadRequestException("The user: " + makiko.getCredentials().getUsername()
+					+ " is not following the user: " + helena.getCredentials().getUsername());
 		}
+
+		helena.getFollowers().remove(makiko);
+		userRepository.saveAndFlush(helena);
+
 	}
 
-	private void validateUserAuthentication(User user1, User user2) {
-		if ((!user1.getCredentials().getUsername().equals(user2.getCredentials().getUsername()))
-				|| (!user1.getCredentials().getPassword().equals(user2.getCredentials().getPassword()))) {
-
-			throw new UnauthorizedException("Do not match username or/and password");
-		}
-	}
 
 	@Override
 	public List<UserResponseDto> getAllUsers() {
@@ -131,21 +154,16 @@ public class UserServiceImpl implements UserService {
 	public UserResponseDto deleteUser(CredentialsDto credentialDto, String username) {
 		validateCredentialsDto(credentialDto);
 		User userToDelete = getUser(username);
-		validateAuthentication(userToDelete, credentialDto);
 		userToDelete.setDeleted(true);
 		return userMapper.entityToUserResponseDto(userRepository.saveAndFlush(userToDelete));
 	}
 
 	@Override
 	public UserResponseDto updateUser(UserRequestDto userRequestDto, String username) {
-		validateUserRequest(userRequestDto);
 		User userToUpdate = getUser(username);
 		User user = userMapper.userRequestDtoToEntity(userRequestDto);
-		validateUserAuthentication(userToUpdate, user);
+		validateCredential(user);
 
-//		if (user.getCredentials().getPassword() != null) {
-//			userToUpdate.getCredentials().setPassword(user.getCredentials().getPassword());
-//		}
 		if (user.getProfile().getEmail() != null) {
 			userToUpdate.getProfile().setEmail(user.getProfile().getEmail());
 		}
@@ -164,11 +182,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void createFollower(String username, CredentialsDto credentialsDto) {
-		User follower = getUser(username);
-		User following = getUser(credentialsDto.getUsername());
+		validateCredentialsDto(credentialsDto);
+		User following = getUser(username);
+		User follower = getUser(credentialsDto.getUsername());
 		validateFollow(follower, following);
-		userRepository.saveAndFlush(follower);
-		userRepository.saveAndFlush(following);
+	}
+
+	@Override
+	public void createUnFollower(String username, CredentialsDto credentialsDto) {
+		validateCredentialsDto(credentialsDto);
+		User user = getUser(username);
+		User follower = getUser(credentialsDto.getUsername());
+		unFollowUser(user, follower);
 	}
 
 	@Override
@@ -181,6 +206,17 @@ public class UserServiceImpl implements UserService {
 	public List<UserResponseDto> getFollowingByUsername(String username) {
 		User user = getUser(username);
 		return userMapper.entitiesToUserResponseDtos(user.getFollowing());
+	}
+
+	@Override
+	public List<TweetResponseDto> getTweetByUsername(String username) {
+		User user = getUser(username);
+		Integer author = Math.toIntExact(user.getId());
+		System.out.println("author" + author);
+		List<Tweet> tweets = tweetRepository.findAllByAuthorAndDeletedFalseOrderByPostedDesc(author);
+		System.out.println("tweets" + tweets.get(0));
+//		return tweetMapper.entitiesToDtos(tweets);
+		return null;
 	}
 
 }
