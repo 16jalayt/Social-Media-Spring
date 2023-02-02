@@ -1,9 +1,9 @@
 package com.cooksys.socialmediaassignment;
 
-
 import com.cooksys.socialmediaassignment.entities.Hashtag;
 import com.cooksys.socialmediaassignment.entities.Tweet;
 import com.cooksys.socialmediaassignment.entities.User;
+
 import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
 import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
 import com.cooksys.socialmediaassignment.repositories.TweetRepository;
@@ -22,20 +22,20 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
 
+
 @Component
 @RequiredArgsConstructor
 public class Seeder implements CommandLineRunner {
-
 
 	private final UserRepository userRepository;
 	private final TweetRepository tweetRepository;
 	private final HashtagRepository hashtagRepository;
 
-
 	@Override
 	public void run(String... args) throws Exception {
 
 		Credentials credential1 = new Credentials();
+
 		credential1.setUsername("mboren");
 		credential1.setPassword("password");
 		Profile profile1 = new Profile();
@@ -43,10 +43,12 @@ public class Seeder implements CommandLineRunner {
 		profile1.setFirstName("Michael");
 		profile1.setLastName("Boren");
 		profile1.setPhone("(901)907-7909");
+
 		User user1 = new User();
 		user1.setCredentials(credential1);
 		user1.setProfile(profile1);
 		user1.setDeleted(false);
+
 		userRepository.saveAndFlush(user1);
 
 		Credentials credential2 = new Credentials();
@@ -57,6 +59,7 @@ public class Seeder implements CommandLineRunner {
 		profile2.setFirstName("Will");
 		profile2.setLastName("Marttala");
 		profile2.setPhone("wmarttala@cooksys.com");
+
 		User user2 = new User();
 		user2.setCredentials(credential2);
 		user2.setProfile(profile2);
@@ -95,6 +98,7 @@ public class Seeder implements CommandLineRunner {
 		//IMPORTANT: saving tweets a second time crashes
 
 //		List<Tweet> replies = new ArrayList<>();
+
 //		replies.add(tweet);
 //		tweet.setReplies(replies);
 
@@ -118,6 +122,7 @@ public class Seeder implements CommandLineRunner {
 		//hashtagList.add(hashtag);
 		//tweet.setHashtags(hashtagList);
 //		tweet2.setHashtags(hashtagList);
+
 
 		//tweetRepository.saveAndFlush(tweet);
 		//tweetRepository.saveAndFlush(tweet2);
