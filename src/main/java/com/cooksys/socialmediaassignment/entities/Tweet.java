@@ -8,14 +8,30 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-@Data
-@Table(name = "tweet")
+@Getter
+@Setter
+@JsonIgnoreProperties({"reposts", "repostOf", "hashtags", "author", "usersMentioned", "likes", "replies", "inReplyTo"})
+
 public class Tweet {
-    @Id
+
+	@Id
     @GeneratedValue
     private Long id;
     
@@ -59,7 +75,45 @@ public class Tweet {
     	inverseJoinColumns = @JoinColumn(name = "user_id")
     	)
     private Set<User> mentions; 
-    
-   
+	
+    // Methods to call in TweetServiceImpl
+	public void addMentionedUser(User user) {
+        this.mentions.add(user);
+        user.getMentions().add(this);
+    }
+
+    public void removeMentionedUser(User user) {
+        this.mentions.remove(user);
+        user.getMentions().remove(this);
+    }
+
+    public void addLike(User user) {
+        this.likedByUsers.add(user);
+        user.getLikedTweets().add(this);
+    }
+
+    public void removeLike(User user) {
+        this.likedByUsers.add(user);
+        user.getLikedTweets().remove(this);
+    }
+
+    public void addHashtag(Hashtag hashtag) {
+        this.hashtags.add(hashtag);
+        hashtag.getTweets().add(this);
+    }
+
+    public void removeHashtag(Hashtag hashtag) {
+        this.hashtags.remove(hashtag);
+        hashtag.getTweets().remove(this);
+    }
+
+    public Long getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Long user) {
+		this.author = user;
+	}
+
    
 }
