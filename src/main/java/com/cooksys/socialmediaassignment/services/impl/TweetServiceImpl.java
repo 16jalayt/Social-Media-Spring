@@ -57,7 +57,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetResponseDto getTweetById(Long id) {
     	Tweet tweet = _getActiveTweetById(id);
     	if(tweet == null || tweet.isDeleted()) {
-			throw new NotFoundException("No tweet with thta ID: " + id);
+			throw new NotFoundException("No tweet with that ID: " + id);
     	} 
         return tweetMapper.entityToDto(_getActiveTweetById(id));
     }
@@ -87,7 +87,7 @@ public class TweetServiceImpl implements TweetService {
     public ContextResponseDto getContextForTweet(Long id) {
     	Tweet tweet = _getActiveTweetById(id);
     	if(tweet == null || tweet.isDeleted()) {
-			throw new NotFoundException("No tweet with thta ID: " + id);
+			throw new NotFoundException("No tweet with that ID: " + id);
     	} 
         ContextResponseDto responseDto = new ContextResponseDto();
         responseDto.setTarget(tweetMapper.entityToDto(tweet));
@@ -128,7 +128,7 @@ public class TweetServiceImpl implements TweetService {
     public List<TweetResponseDto> getRepostOfTweetById(Long id) {
     	Tweet tweet = _getActiveTweetById(id);
     	if(tweet == null || tweet.isDeleted()) {
-			throw new NotFoundException("No tweet with thta ID: " + id);
+			throw new NotFoundException("No tweet with that ID: " + id);
     	} 
         return tweetMapper.entitiesToDtos(_activeTweets(tweet.getReposts()));
     }
@@ -150,7 +150,7 @@ public class TweetServiceImpl implements TweetService {
     public List<TweetResponseDto> getRepliesToTweetById(Long id) {        
      	Tweet tweet = _getActiveTweetById(id);
     	if(tweet == null || tweet.isDeleted()) {
-			throw new NotFoundException("No tweet with thta ID: " + id);
+			throw new NotFoundException("No tweet with that ID: " + id);
     	} 
         return tweetMapper.entitiesToDtos(_activeTweets(tweet.getReplies()));
     }
@@ -159,7 +159,7 @@ public class TweetServiceImpl implements TweetService {
     public List<UserResponseDto> getMentionInTweetById(Long id) {
      	Tweet tweet = _getActiveTweetById(id);
     	if(tweet == null || tweet.isDeleted()) {
-			throw new NotFoundException("No tweet with thta ID: " + id);
+			throw new NotFoundException("No tweet with that ID: " + id);
     	} 
         return userMapper.entitiesToUserResponseDtos(tweet.getMentions().stream().filter(u -> !u.isDeleted()).collect(Collectors.toList()));
     }
@@ -168,7 +168,7 @@ public class TweetServiceImpl implements TweetService {
     public List<UserResponseDto> getLikeForTweet(Long id) {
      	Tweet tweet = _getActiveTweetById(id);
     	if(tweet == null || tweet.isDeleted()) {
-			throw new NotFoundException("No tweet with thta ID: " + id);
+			throw new NotFoundException("No tweet with that ID: " + id);
     	} 
         return userMapper.entitiesToUserResponseDtos(tweet.getLikedByUsers().stream().filter(u -> !u.isDeleted()).collect(Collectors.toList()));
     }
@@ -226,7 +226,7 @@ public class TweetServiceImpl implements TweetService {
 	public List<HashtagResponseDto> getHashtagsbyTweetById(Long id) {
     	Tweet tweet = _getActiveTweetById(id);
     	if(tweet == null || tweet.isDeleted()) {
-			throw new NotFoundException("No tweet with thta ID: " + id);
+			throw new NotFoundException("No tweet with that ID: " + id);
     	} 
     	return hashtagMapper.entitiesToDtos(tweet.getHashtags());  
 	}
