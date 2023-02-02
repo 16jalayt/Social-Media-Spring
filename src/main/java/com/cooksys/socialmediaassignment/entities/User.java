@@ -1,7 +1,7 @@
 package com.cooksys.socialmediaassignment.entities;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,35 +46,21 @@ public class User {
 	private boolean deleted = false;
 
 	@OneToMany(mappedBy = "author")
-	private Set<Tweet> tweets;
+	private List<Tweet> tweets;
 
 	@ManyToMany
 	@JoinTable(name = "followers_following")
-	private Set<User> followers;
+	private List<User> followers;
 
 	@ManyToMany(mappedBy = "followers")
-	private Set<User> following;
+	private List<User> following;
+
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(name = "tweet_liked_mapping", joinColumns = { @JoinColumn(name = "tweet_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "user_id") })
-	private Set<Tweet> likedTweets;
+	private List<Tweet> likedTweets;
 
-	@ManyToMany(mappedBy = "mentions", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	private Set<Tweet> mentions;
-
-	public void addLikedTweet(Tweet tweet) {
-	     this.likedTweets.add(tweet);
-	}
-
-////	@ManyToMany(mappedBy = "likes")
-//	@ManyToMany
-//	@JoinColumn(name = "tweeter_id")
-//	private Set<Tweet> likedTweets;
-//	
-////	@ManyToMany(mappedBy = "usersMentioned")
-//	@ManyToMany
-//	@JoinColumn(name = "tweeter_id")
-//	private Set<Tweet> mentions;
-
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	private List<Tweet> mentions;
 }

@@ -58,22 +58,24 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public TweetResponseDto createTweet(TweetRequestDto tweetRequestDto) {
-        Long author = _authorizeCredential(tweetRequestDto.getCredentials());
-        Tweet tweet = new Tweet();
-        tweet.setAuthor(author);
-        tweet.setContent(tweetRequestDto.getContent());
-        _processTweetContent(tweet);
-        return tweetMapper.entityToDto(tweetRepository.saveAndFlush(tweet));
+//        Long author = _authorizeCredential(tweetRequestDto.getCredentials());
+//        Tweet tweet = new Tweet();
+//        tweet.setAuthor(author);
+//        tweet.setContent(tweetRequestDto.getContent());
+//        _processTweetContent(tweet);
+//        return tweetMapper.entityToDto(tweetRepository.saveAndFlush(tweet));
+    	
+    	return null; 
     }
 
     @Override
     public void likeTweetById(Long id, Credentials credentials) {
-//        User user = _authorizeCredential(credentials);
-//        Tweet tweet = _getActiveTweetById(id);
-//        List<Tweet> likedTweets = user.getLikedTweets();
-//        likedTweets.add(tweet);
-//        user.setLikedTweets(likedTweets);
-//        userRepository.saveAndFlush(user);
+        User user = _authorizeCredential(credentials);
+        Tweet tweet = _getActiveTweetById(id);
+        List<Tweet> likedTweets = user.getLikedTweets();
+        likedTweets.add(tweet);
+        user.setLikedTweets(likedTweets);
+        userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -88,23 +90,25 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public TweetResponseDto deleteTweetById(Long id, Credentials credentials) {
-        Tweet tweet = _getActiveTweetById(id);
-        Long user = _authorizeCredential(credentials);
-        if (user != tweet.getAuthor())
-            throw new UnauthorizedException("Bad credentials");
-        tweet.setDeleted(true);
-
-        return tweetMapper.entityToDto(tweetRepository.saveAndFlush(tweet));
+//        Tweet tweet = _getActiveTweetById(id);
+//        User user = _authorizeCredential(credentials);
+//        if (user != tweet.getAuthor())
+//            throw new UnauthorizedException("Bad credentials");
+//        tweet.setDeleted(true);
+//
+//        return tweetMapper.entityToDto(tweetRepository.saveAndFlush(tweet));
+    	return null; 
     }
 
     @Override
     public TweetResponseDto repostTweetById(Long id, Credentials credentials) {
-    	Long user = _authorizeCredential(credentials);
-        Tweet originalTweet = _getActiveTweetById(id);
-        Tweet repostTweet = new Tweet();
-        repostTweet.setAuthor(user);
-        repostTweet.setRepostOf(originalTweet);
-        return tweetMapper.entityToDto(tweetRepository.saveAndFlush(repostTweet));
+//    	User user = _authorizeCredential(credentials);
+//        Tweet originalTweet = _getActiveTweetById(id);
+//        Tweet repostTweet = new Tweet();
+//        repostTweet.setAuthor(user);
+//        repostTweet.setRepostOf(originalTweet);
+//        return tweetMapper.entityToDto(tweetRepository.saveAndFlush(repostTweet));
+    	return null; 
     }
 
     @Override
@@ -115,15 +119,16 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public TweetResponseDto replyTweetById(Long id, TweetRequestDto tweetRequestDto) {
-        Tweet tweetToReply = _getActiveTweetById(id);
-        Long author = _authorizeCredential((Credentials) tweetRequestDto.getCredentials());
-
-        Tweet tweet = new Tweet();
-        tweet.setInReplyTo(tweetToReply);
-        tweet.setContent(tweetRequestDto.getContent());
-        tweet.setAuthor(author);
-        _processTweetContent(tweet);
-        return tweetMapper.entityToDto(tweetRepository.saveAndFlush(tweet));
+//        Tweet tweetToReply = _getActiveTweetById(id);
+//        Long author = _authorizeCredential((Credentials) tweetRequestDto.getCredentials());
+//
+//        Tweet tweet = new Tweet();
+//        tweet.setInReplyTo(tweetToReply);
+//        tweet.setContent(tweetRequestDto.getContent());
+//        tweet.setAuthor(author);
+//        _processTweetContent(tweet);
+//        return tweetMapper.entityToDto(tweetRepository.saveAndFlush(tweet));
+    	return null; 
     }
 
     @Override
@@ -193,19 +198,17 @@ public class TweetServiceImpl implements TweetService {
         return tweetMapper.entitiesToDtos(response);
     }
     
-	@Override
-	public List<HashtagResponseDto> getHashtagsbyTweetById(Long id) {
-		return null;
-	}
+	
 
+	
     /*
      * Methods to call in TweetServiceImpl methods
      */
-    private Long _authorizeCredential(Credentials credentials) {
-        Optional<User> userOptional = userRepository.findUserByCredentialsUsernameAndDeletedFalse(credentials.getUsername());
+    private User _authorizeCredential(Credentials credentials) {
+        Optional<User> userOptional = userRepository.findUserByCredentialsUsername(credentials.getUsername());
         if (userOptional.isEmpty() || userOptional.get().isDeleted())
             throw new UnauthorizedException("Bad credentials");
-        return userOptional.get().getId();
+        return userOptional.get();
     }
 
     private Tweet _getActiveTweetById(Long id) {
@@ -240,67 +243,67 @@ public class TweetServiceImpl implements TweetService {
         return tweetList;
     }
 
-    private void _processTweetContent (Tweet tweet) {
-        String content = tweet.getContent();
+//    private void _processTweetContent (Tweet tweet) {
+//        String content = tweet.getContent();
+//
+//        List<String> mentions = _getMatches(content, "@");
+//        List<String> tagLabels = _getMatches(content, "#");
+//
+//        for (String tagLabel : tagLabels) {
+//            Optional<Hashtag> hashtagOptional = Optional.of(hashtagRepository.findByLabel(tagLabel));
+//            Hashtag hashtag;
+//            if (hashtagOptional.isEmpty()) {
+//                hashtag = new Hashtag();
+//                hashtag.setLabel(tagLabel);
+//            } else {
+//                hashtag = hashtagOptional.get();
+//            }
+//            hashtag.setLastUsed((Timestamp) new Timestamp(System.currentTimeMillis()));
+//            hashtag = hashtagRepository.saveAndFlush(hashtag);
+//            tweet.addHashtag(hashtag);
+//        }
+//
+//        Set<Hashtag> hashtagSet = new HashSet<>(tweet.getHashtags());
+//        for (Hashtag hashtag : hashtagSet) {
+//            if (!tagLabels.contains(hashtag.getLabel()))
+//                tweet.removeHashtag(hashtag);
+//        }
+//
+//        for (String username : mentions) {
+//            User user = _getUserByUsername(username);
+//            if (user == null)
+//                continue;
+//            tweet.addMentionedUser(user);
+//        }
+//
+//        Set<User> mentionSet = new HashSet<>(tweet.getMentions());
+//        for (User mention : mentionSet) {
+//            if (!mentions.contains(mention.getCredentials().getUsername()))
+//                tweet.removeMentionedUser(mention);
+//        }
+//    }
 
-        List<String> mentions = _getMatches(content, "@");
-        List<String> tagLabels = _getMatches(content, "#");
-
-        for (String tagLabel : tagLabels) {
-            Optional<Hashtag> hashtagOptional = Optional.of(hashtagRepository.findByLabel(tagLabel));
-            Hashtag hashtag;
-            if (hashtagOptional.isEmpty()) {
-                hashtag = new Hashtag();
-                hashtag.setLabel(tagLabel);
-            } else {
-                hashtag = hashtagOptional.get();
-            }
-            hashtag.setLastUsed((Timestamp) new Timestamp(System.currentTimeMillis()));
-            hashtag = hashtagRepository.saveAndFlush(hashtag);
-            tweet.addHashtag(hashtag);
-        }
-
-        Set<Hashtag> hashtagSet = new HashSet<>(tweet.getHashtags());
-        for (Hashtag hashtag : hashtagSet) {
-            if (!tagLabels.contains(hashtag.getLabel()))
-                tweet.removeHashtag(hashtag);
-        }
-
-        for (String username : mentions) {
-            User user = _getUserByUsername(username);
-            if (user == null)
-                continue;
-            tweet.addMentionedUser(user);
-        }
-
-        Set<User> mentionSet = new HashSet<>(tweet.getMentions());
-        for (User mention : mentionSet) {
-            if (!mentions.contains(mention.getCredentials().getUsername()))
-                tweet.removeMentionedUser(mention);
-        }
-    }
-
-    private List<String> _getMatches(String text, String matchBegin) {
-        Set<Character> specialChars = Set.of('@', ' ', '#');
-
-        int pointer = 0;
-        List<String> matchList = new ArrayList<>();
-
-        while (text.indexOf(matchBegin, pointer) >= 0) {
-            pointer = text.indexOf(matchBegin, pointer);
-            String username = "";
-            int auxPointer = pointer + 1;
-            while (auxPointer < text.length() && !specialChars.contains(text.charAt(auxPointer)))
-                username = username + text.charAt(auxPointer++);
-            matchList.add(username);
-            pointer = auxPointer;
-        }
-
-        return  matchList;
-    }
+//    private List<String> _getMatches(String text, String matchBegin) {
+//        Set<Character> specialChars = Set.of('@', ' ', '#');
+//
+//        int pointer = 0;
+//        List<String> matchList = new ArrayList<>();
+//
+//        while (text.indexOf(matchBegin, pointer) >= 0) {
+//            pointer = text.indexOf(matchBegin, pointer);
+//            String username = "";
+//            int auxPointer = pointer + 1;
+//            while (auxPointer < text.length() && !specialChars.contains(text.charAt(auxPointer)))
+//                username = username + text.charAt(auxPointer++);
+//            matchList.add(username);
+//            pointer = auxPointer;
+//        }
+//
+//        return  matchList;
+//    }
 
     private User _getUserByUsername(String username) {
-        Optional<User> userOptional = userRepository.findUserByCredentialsUsernameAndDeletedFalse(username);
+        Optional<User> userOptional = userRepository.findUserByCredentialsUsername(username);
         if (userOptional.isEmpty())
             return null;
         return userOptional.get();
@@ -309,4 +312,10 @@ public class TweetServiceImpl implements TweetService {
     private List<Tweet> _activeTweets (Collection<Tweet> tweets) {
         return tweets.stream().filter(t -> !t.isDeleted()).collect(Collectors.toList());
     }
+
+	@Override
+	public List<HashtagResponseDto> getHashtagsbyTweetById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -1,6 +1,7 @@
 package com.cooksys.socialmediaassignment.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,5 +59,23 @@ public class UserController {
 		return userService.updateUser(userRequestDto, username);
 	}
 	
+	//Create follow
+	@PostMapping("/@{username}/follow")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void createFollower(@PathVariable String username, @RequestBody CredentialsDto credentialsDto) {
+	userService.createFollower(username, credentialsDto);
+	}
+
+	//Get user's follower's information 
+	@GetMapping("/@{username}/followers")
+	public List<UserResponseDto> getFollowersByUsername(@PathVariable String username) {
+		return userService.getFollowersByUsername(username);
+	}
+	
+	//Get user's following information
+	@GetMapping("/@{username}/following")
+	public List<UserResponseDto> getFollowingByUsername(@PathVariable String username) {
+		return userService.getFollowingByUsername(username);
+	}
 
 }
