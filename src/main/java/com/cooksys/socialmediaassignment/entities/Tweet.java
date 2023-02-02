@@ -4,7 +4,11 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -15,16 +19,23 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
+@Getter
+@Setter
+@JsonIgnoreProperties({"reposts", "repostOf", "hashtags", "author", "usersMentioned", "likes", "replies", "inReplyTo"})
+
 public class Tweet {
-    @Id
+
+	@Id
     @GeneratedValue
     private Long id;
     
-    private Integer author; 
+    private Long author;
     
     @CreationTimestamp
     private Timestamp posted; 
@@ -63,8 +74,7 @@ public class Tweet {
     	joinColumns = @JoinColumn(name = "tweet_id"),
     	inverseJoinColumns = @JoinColumn(name = "user_id")
     	)
+
     private List<User> mentions; 
-    
-   
    
 }

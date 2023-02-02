@@ -20,19 +20,22 @@ public class ValidateController {
 	private final HashtagService hashtagService;
 
 	@GetMapping("/username/exists/@{username}")
+	@ResponseStatus(HttpStatus.FOUND)
 	public boolean checkUserByUsername(@PathVariable String username) {
 		return validateService.checkUserByUsername(username);
 	}
 
 	@GetMapping("/username/available/@{username}")
 	public boolean checkUsernameAvailability(@PathVariable String username) {
+
 		return validateService.checkUsernameAvailability(username);
 	}
 
 	@RequestMapping(value = "/tag/exists/{label}")
 	@GetMapping
-	public HashtagResponseDto validateTagExists(@PathVariable("label") String label) {
-		return hashtagService.validateTagExists(label);
+	@ResponseStatus(HttpStatus.FOUND)
+	public boolean validateTagExists(@PathVariable("label") String label) {
+		return validateService.validateTagExists(label);
 	}
 
 }

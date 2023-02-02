@@ -63,5 +63,4 @@ public class User {
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	private List<Tweet> mentions;
-
 }
