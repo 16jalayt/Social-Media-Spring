@@ -74,7 +74,7 @@ public class Seeder implements CommandLineRunner {
 		likedBy.add(user2);
         tweet.setLikedByUsers(likedBy);
 		tweet.setPosted(new Timestamp(System.currentTimeMillis()));
-		Set<User> mentioned = new HashSet<>();
+		List<User> mentioned = new ArrayList<>();
 		mentioned.add(user2);
 		tweet.setMentions(mentioned);
 
@@ -87,7 +87,7 @@ public class Seeder implements CommandLineRunner {
 		likedBy2.add(user2);
 		tweet2.setLikedByUsers(likedBy2);
 		tweet2.setPosted(new Timestamp(System.currentTimeMillis()));
-		Set<User> mentioned2 = new HashSet<>();
+		List<User> mentioned2 = new ArrayList<>();
 		mentioned2.add(user1);
 		tweet2.setMentions(mentioned2);
 		tweet2.setInReplyTo(tweet);

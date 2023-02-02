@@ -72,8 +72,10 @@ public class TweetServiceImpl implements TweetService {
     public void likeTweetById(Long id, Credentials credentials) {
         User user = _authorizeCredential(credentials);
         Tweet tweet = _getActiveTweetById(id);
-        user.addLikedTweet(tweet);
-        userRepository.saveAllAndFlush(user);
+        List<Tweet> likedTweets = user.getLikedTweets();
+        likedTweets.add(tweet);
+        user.setLikedTweets(likedTweets);
+        userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -203,7 +205,7 @@ public class TweetServiceImpl implements TweetService {
      * Methods to call in TweetServiceImpl methods
      */
     private User _authorizeCredential(Credentials credentials) {
-        Optional<User> userOptional = userRepository.findOneByCredentials(credentials);
+        Optional<User> userOptional = userRepository.findUserByCredentialsUsername(credentials.getUsername());
         if (userOptional.isEmpty() || userOptional.get().isDeleted())
             throw new UnauthorizedException("Bad credentials");
         return userOptional.get();
@@ -301,7 +303,7 @@ public class TweetServiceImpl implements TweetService {
 //    }
 
     private User _getUserByUsername(String username) {
-        Optional<User> userOptional = userRepository.findByCredentialUsername(username);
+        Optional<User> userOptional = userRepository.findUserByCredentialsUsername(username);
         if (userOptional.isEmpty())
             return null;
         return userOptional.get();
