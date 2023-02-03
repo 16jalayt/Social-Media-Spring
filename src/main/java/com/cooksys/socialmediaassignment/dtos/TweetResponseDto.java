@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class TweetResponseDto {
 
     private Long id;
-    private Long author;
+    private String author;
     private String content;
     private Timestamp posted;
     private Tweet inReplyTo;

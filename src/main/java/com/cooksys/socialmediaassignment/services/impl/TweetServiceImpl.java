@@ -252,7 +252,7 @@ public class TweetServiceImpl implements TweetService {
         if (userOptional.isEmpty() || userOptional.get().isDeleted())
             throw new UnauthorizedException("Bad credentials");
         
-        if (userOptional.get().getCredentials().getPassword() == credentials.getPassword())
+        if (!userOptional.get().getCredentials().getPassword().equals(credentials.getPassword()) )
             throw new UnauthorizedException("Password doesn't match");
         
         return userOptional.get().getId();
@@ -301,15 +301,15 @@ public class TweetServiceImpl implements TweetService {
 
         for (String tagLabel : tagLabels) {
             Hashtag tag = hashtagRepository.findByLabel(tagLabel);
-            Optional<Hashtag> hashtagOptional = Optional.of(tag);
+            Optional<Hashtag> hashtagOptional = Optional.ofNullable(tag);
             Hashtag hashtag;
-            if (hashtagOptional.isEmpty()) {
+            if (hashtagOptional.isEmpty() || hashtagOptional == null) {
                 hashtag = new Hashtag();
                 hashtag.setLabel(tagLabel);
             } else {
                 hashtag = hashtagOptional.get();
             }
-            hashtag.setLastUsed(new Timestamp(System.currentTimeMillis()));
+            //hashtag.setLastUsed(new Timestamp(System.currentTimeMillis()));
             hashtag = hashtagRepository.saveAndFlush(hashtag);
             tweet.addHashtag(hashtag);
         }

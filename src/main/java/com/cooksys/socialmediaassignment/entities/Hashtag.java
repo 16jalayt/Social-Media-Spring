@@ -1,6 +1,7 @@
 package com.cooksys.socialmediaassignment.entities;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -29,7 +30,7 @@ public class Hashtag {
 
     @ManyToMany
     //@ManyToMany(mappedBy = "hashtags", cascade=CascadeType.ALL)
-    private List<Tweet> tweetsWithHashtag;
+    private List<Tweet> tweetsWithHashtag = new ArrayList<>();
 
     public void addTweet(Tweet tweet) {
         this.tweetsWithHashtag.add(tweet);
@@ -40,10 +41,5 @@ public class Hashtag {
         this.tweetsWithHashtag.remove(tweet);
         tweet.getHashtags().remove(this);
     }
-
-	public List<Tweet> getTweets() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

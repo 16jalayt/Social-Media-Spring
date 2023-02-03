@@ -1,6 +1,7 @@
 package com.cooksys.socialmediaassignment.entities;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -48,7 +49,7 @@ public class Tweet {
     
   
     @OneToMany(mappedBy = "inReplyTo")
-    private List<Tweet> replies; 
+    private List<Tweet> replies = new ArrayList<>();
     
     @ManyToOne
     private Tweet repostOf;
@@ -62,10 +63,10 @@ public class Tweet {
     	joinColumns = @JoinColumn(name = "tweet_id"),
     	inverseJoinColumns = @JoinColumn(name = "hashtag_id")
     	)
-    private List<Hashtag> hashtags; 
+    private List<Hashtag> hashtags = new ArrayList<>();
     
     @ManyToMany(mappedBy = "likedTweets")
-    private List<User> likedByUsers; 
+    private List<User> likedByUsers = new ArrayList<>();
     
     @ManyToMany
     @JoinTable(
@@ -73,7 +74,7 @@ public class Tweet {
     	joinColumns = @JoinColumn(name = "tweet_id"),
     	inverseJoinColumns = @JoinColumn(name = "user_id")
     	)
-    private List<User> mentions; 
+    private List<User> mentions = new ArrayList<>();
     
     
     /*
@@ -101,11 +102,11 @@ public class Tweet {
 
     public void addHashtag(Hashtag hashtag) {
         this.hashtags.add(hashtag);
-        hashtag.getTweets().add(this);
+        hashtag.getTweetsWithHashtag().add(this);
     }
 
     public void removeHashtag(Hashtag hashtag) {
         this.hashtags.remove(hashtag);
-        hashtag.getTweets().remove(this);
+        hashtag.getTweetsWithHashtag().remove(this);
     }
 }
