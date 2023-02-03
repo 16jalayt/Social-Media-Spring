@@ -19,4 +19,6 @@ public interface TweetMapper {
     static String credentialToUsername(Credentials credential) {
         return credential.getUsername();
     }
+
+	List<TweetResponseDto> entitiesToTweetResposeDtos(List<Tweet> tweets);
 }

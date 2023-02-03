@@ -1,36 +1,46 @@
-package com.cooksys.socialmediaassignment;
+//package com.cooksys.socialmediaassignment;
+//
 
-import com.cooksys.socialmediaassignment.entities.Hashtag;
-import com.cooksys.socialmediaassignment.entities.Tweet;
-import com.cooksys.socialmediaassignment.entities.User;
+//import java.sql.Timestamp;
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import org.springframework.boot.CommandLineRunner;
+//import org.springframework.stereotype.Component;
+//
+//import com.cooksys.socialmediaassignment.entities.Hashtag;
+//import com.cooksys.socialmediaassignment.entities.Tweet;
+//import com.cooksys.socialmediaassignment.entities.User;
+//import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
 
-import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
-import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
-import com.cooksys.socialmediaassignment.repositories.TweetRepository;
-import com.cooksys.socialmediaassignment.repositories.UserRepository;
+//import com.cooksys.socialmediaassignment.entities.embeddable.Profile;
+//import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
+//import com.cooksys.socialmediaassignment.repositories.TweetRepository;
+//import com.cooksys.socialmediaassignment.repositories.UserRepository;
+//
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+//import org.springframework.boot.CommandLineRunner;
+//import org.springframework.stereotype.Component;
+//
+//import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
+//
+//import lombok.RequiredArgsConstructor;
+//
+//import java.sql.Timestamp;
+//import java.util.ArrayList;
+//import java.util.HashSet;
+//import java.util.Set;
+//import java.util.List;
+//
 
-import com.cooksys.socialmediaassignment.entities.embeddable.Credentials;
+//import lombok.RequiredArgsConstructor;
+//
 
-import lombok.RequiredArgsConstructor;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
-
-
-@Component
-@RequiredArgsConstructor
-public class Seeder implements CommandLineRunner {@Override
-	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
+//
+//@Component
+//@RequiredArgsConstructor
+//public class Seeder implements CommandLineRunner {
+//
 //	private final UserRepository userRepository;
 //	private final TweetRepository tweetRepository;
 //	private final HashtagRepository hashtagRepository;
@@ -98,14 +108,14 @@ public class Seeder implements CommandLineRunner {@Override
 //
 //		tweetRepository.saveAndFlush(tweet);
 //		tweetRepository.saveAndFlush(tweet2);
-
-		//IMPORTANT: saving tweets a second time crashes
-
-//		List<Tweet> replies = new ArrayList<>();
-
-//		replies.add(tweet);
-//		tweet.setReplies(replies);
-
+//
+//		//IMPORTANT: saving tweets a second time crashes
+//
+////		List<Tweet> replies = new ArrayList<>();
+//
+////		replies.add(tweet);
+////		tweet.setReplies(replies);
+//
 //		Hashtag hashtag = new Hashtag();
 //		hashtag.setLabel("weAreNumber1");
 //		hashtagRepository.saveAndFlush(hashtag);
@@ -121,17 +131,17 @@ public class Seeder implements CommandLineRunner {@Override
 //		tweetsWithHashtag2.add(tweet2);
 //		hashtag2.setTweetsWithHashtag(tweetsWithHashtag2);
 //		hashtagRepository.saveAndFlush(hashtag2);
-
-        //List<Hashtag> hashtagList = new ArrayList<>();
-		//hashtagList.add(hashtag);
-		//tweet.setHashtags(hashtagList);
-//		tweet2.setHashtags(hashtagList);
-
-
-		//tweetRepository.saveAndFlush(tweet);
-		//tweetRepository.saveAndFlush(tweet2);
-
-
+//
+//        //List<Hashtag> hashtagList = new ArrayList<>();
+//		//hashtagList.add(hashtag);
+//		//tweet.setHashtags(hashtagList);
+////		tweet2.setHashtags(hashtagList);
+//
+//
+//		//tweetRepository.saveAndFlush(tweet);
+//		//tweetRepository.saveAndFlush(tweet2);
+//
+//
 //	}
-
-}
+//
+//}

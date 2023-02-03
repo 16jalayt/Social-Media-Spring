@@ -85,10 +85,12 @@ public class UserController {
 		return userService.getFollowingByUsername(username);
 	}
 
+	// Get all tweets for the user
 	@GetMapping("/@{username}/tweets")
 	public List<TweetResponseDto> getTweetByUsername(@PathVariable String username) {
 		return userService.getTweetByUsername(username);
 	}
+
 
 	// Subscribes the user whose credentials are provided by the request body to the
 	// user whose username is given in the url.
@@ -98,4 +100,14 @@ public class UserController {
 //		userService.createFollower(username, credentialsDto);
 //	}
 
+	// Get user's mentions
+	@GetMapping("/@{username}/mentions")
+	public List<TweetResponseDto> getMentions(@PathVariable String username) {
+		return userService.getMentions(username);
+	}
+	// Get user's mentions
+	@GetMapping("/@{username}/feed")
+	public List<TweetResponseDto> getFeed(@PathVariable String username) {
+		return userService.getFeed(username);
+	}
 }

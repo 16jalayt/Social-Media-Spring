@@ -10,6 +10,8 @@ import com.cooksys.socialmediaassignment.entities.Tweet;
 @Repository
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
 	
-	List<Tweet> findAllByAuthorAndDeletedFalseOrderByPostedDesc(Integer author);
+
+	List<Tweet> findAllByAuthorAndDeletedFalseOrderByPostedDesc(Long user);
+
 
 }
