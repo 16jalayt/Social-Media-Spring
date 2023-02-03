@@ -57,7 +57,7 @@ public class User {
 
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinTable(name = "tweet_liked_mapping", joinColumns = { @JoinColumn(name = "tweet_id") }, inverseJoinColumns = {
+	@JoinTable(name = "user_likes", joinColumns = { @JoinColumn(name = "tweet_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "user_id") })
 	private List<Tweet> likedTweets;
 

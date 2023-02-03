@@ -13,7 +13,7 @@ public class TweetResponseDto {
 
     private Long id;
     private Long author;
-   // private Varchar content;
+    private String content;
     private Timestamp posted;
     private Tweet inReplyTo;
     private Tweet repostOf;
