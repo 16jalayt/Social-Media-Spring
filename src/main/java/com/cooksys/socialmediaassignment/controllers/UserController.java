@@ -85,17 +85,10 @@ public class UserController {
 		return userService.getFollowingByUsername(username);
 	}
 
+	// Get all tweets for the user
 	@GetMapping("/@{username}/tweets")
 	public List<TweetResponseDto> getTweetByUsername(@PathVariable String username) {
 		return userService.getTweetByUsername(username);
 	}
-
-	// Subscribes the user whose credentials are provided by the request body to the
-	// user whose username is given in the url.
-//	@PostMapping("/@{username}/follow")
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public void createFollower(@PathVariable String username, @RequestBody CredentialsDto credentialsDto) {
-//		userService.createFollower(username, credentialsDto);
-//	}
 
 }
