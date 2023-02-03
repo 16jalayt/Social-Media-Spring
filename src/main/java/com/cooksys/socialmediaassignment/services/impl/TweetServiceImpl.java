@@ -67,13 +67,19 @@ public class TweetServiceImpl implements TweetService {
         Long author = _authorizeCredential(tweetRequestDto.getCredentials());
         Tweet tweet = new Tweet();
         tweet.setAuthor(author);
-        tweet.setContent(tweetRequestDto.getContent());
+        String content = tweetRequestDto.getContent();
+        if (content==null)
+            throw new NotFoundException("Must pass tweet content");
+        tweet.setContent(content);
         _processTweetContent(tweet);
         return tweetMapper.entityToDto(tweetRepository.saveAndFlush(tweet));
     }
 
     @Override
     public void likeTweetById(Long id, Credentials credentials) {
+        if(credentials == null)
+            throw new NotFoundException("Must pass credentials");
+
         Long userId = _authorizeCredential(credentials);
         User user = userRepository.getReferenceById(userId); 
         Tweet tweet = _getActiveTweetById(id);
@@ -109,6 +115,9 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public TweetResponseDto repostTweetById(Long id, Credentials credentials) {
+        if(credentials == null)
+            throw new NotFoundException("Must pass credentials");
+
     	Long user = _authorizeCredential(credentials);
     	if(user == null) {
 			throw new NotFoundException("Unable to find user");
@@ -235,6 +244,9 @@ public class TweetServiceImpl implements TweetService {
      * Methods to call in TweetServiceImpl methods
      */
     private Long _authorizeCredential(Credentials credentials) {
+        if(credentials == null)
+            throw new NotFoundException("Must pass credentials");
+        //TODO: validate password exists and matches in database
         Optional<User> userOptional = userRepository.findUserByCredentialsUsername(credentials.getUsername());
         if (userOptional.isEmpty() || userOptional.get().isDeleted())
             throw new UnauthorizedException("Bad credentials");
@@ -276,11 +288,15 @@ public class TweetServiceImpl implements TweetService {
     private void _processTweetContent (Tweet tweet) {
         String content = tweet.getContent();
 
+        if(content == null)
+            throw new BadRequestException("Content is empty on tweet");
+
         List<String> mentions = _getMatches(content, "@");
         List<String> tagLabels = _getMatches(content, "#");
 
         for (String tagLabel : tagLabels) {
-            Optional<Hashtag> hashtagOptional = Optional.of(hashtagRepository.findByLabel(tagLabel));
+            Hashtag tag = hashtagRepository.findByLabel(tagLabel);
+            Optional<Hashtag> hashtagOptional = Optional.of(tag);
             Hashtag hashtag;
             if (hashtagOptional.isEmpty()) {
                 hashtag = new Hashtag();
@@ -288,7 +304,7 @@ public class TweetServiceImpl implements TweetService {
             } else {
                 hashtag = hashtagOptional.get();
             }
-            hashtag.setLastUsed((Timestamp) new Timestamp(System.currentTimeMillis()));
+            hashtag.setLastUsed(new Timestamp(System.currentTimeMillis()));
             hashtag = hashtagRepository.saveAndFlush(hashtag);
             tweet.addHashtag(hashtag);
         }
@@ -314,6 +330,9 @@ public class TweetServiceImpl implements TweetService {
     }
 
     private List<String> _getMatches(String text, String matchBegin) {
+        if(text == null)
+            throw new BadRequestException("Cannot match empty");
+
         Set<Character> specialChars = Set.of('@', ' ', '#');
 
         int pointer = 0;
