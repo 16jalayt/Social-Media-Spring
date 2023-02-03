@@ -91,4 +91,23 @@ public class UserController {
 		return userService.getTweetByUsername(username);
 	}
 
+
+	// Subscribes the user whose credentials are provided by the request body to the
+	// user whose username is given in the url.
+//	@PostMapping("/@{username}/follow")
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public void createFollower(@PathVariable String username, @RequestBody CredentialsDto credentialsDto) {
+//		userService.createFollower(username, credentialsDto);
+//	}
+
+	// Get user's mentions
+	@GetMapping("/@{username}/mentions")
+	public List<TweetResponseDto> getMentions(@PathVariable String username) {
+		return userService.getMentions(username);
+	}
+	// Get user's mentions
+	@GetMapping("/@{username}/feed")
+	public List<TweetResponseDto> getFeed(@PathVariable String username) {
+		return userService.getFeed(username);
+	}
 }

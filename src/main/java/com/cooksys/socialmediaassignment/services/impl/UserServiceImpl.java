@@ -1,5 +1,6 @@
 package com.cooksys.socialmediaassignment.services.impl;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -217,9 +218,39 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<TweetResponseDto> getTweetByUsername(String username) {
 		User user = getUser(username);
+
 		List<Tweet> tweets = tweetRepository.findAllByAuthorAndDeletedFalseOrderByPostedDesc(user.getId());
 		System.out.println(tweetMapper.entitiesToTweetResposeDtos(tweets));
 //		return tweetMapper.entitiesToTweetResposeDtos(tweets);
+
+		return null;
+	}
+
+	@Override
+	public List<TweetResponseDto> getMentions(String username)
+	{
+		User user = getUser(username);
+		if(user==null)
+			throw new NotFoundException("Username not found: "+username);
+
+		return tweetMapper.entitiesToDtos(user.getMentions());
+	}
+
+	@Override
+	public List<TweetResponseDto> getFeed(String username)
+	{
+		User user = getUser(username);
+		if(user==null)
+			throw new NotFoundException("Username not found: "+username);
+
+		List<Tweet> resultTweets = tweetRepository.findAllByAuthorAndDeletedFalseOrderByPostedDesc(user.getId());
+		for(User followee: user.getFollowing())
+		{
+			resultTweets.addAll(tweetRepository.findAllByAuthorAndDeletedFalseOrderByPostedDesc(followee.getId()));
+		}
+
+		resultTweets.sort(Comparator.comparing(Tweet::getPosted));
+
 		return null;
 	}
 

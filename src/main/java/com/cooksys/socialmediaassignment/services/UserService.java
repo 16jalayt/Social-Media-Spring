@@ -29,4 +29,7 @@ public interface UserService {
 
 	List<TweetResponseDto> getTweetByUsername(String username);
 
+	List<TweetResponseDto> getMentions(String username);
+
+	List<TweetResponseDto> getFeed(String username);
 }
