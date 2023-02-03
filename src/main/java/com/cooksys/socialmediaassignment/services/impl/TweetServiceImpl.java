@@ -248,8 +248,13 @@ public class TweetServiceImpl implements TweetService {
             throw new NotFoundException("Must pass credentials");
         //TODO: validate password exists and matches in database
         Optional<User> userOptional = userRepository.findUserByCredentialsUsername(credentials.getUsername());
+        
         if (userOptional.isEmpty() || userOptional.get().isDeleted())
             throw new UnauthorizedException("Bad credentials");
+        
+        if (userOptional.get().getCredentials().getPassword() == credentials.getPassword())
+            throw new UnauthorizedException("Password doesn't match");
+        
         return userOptional.get().getId();
     }
 
