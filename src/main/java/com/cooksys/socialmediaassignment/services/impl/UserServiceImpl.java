@@ -220,32 +220,28 @@ public class UserServiceImpl implements UserService {
 		User user = getUser(username);
 
 		List<Tweet> tweets = tweetRepository.findAllByAuthorAndDeletedFalseOrderByPostedDesc(user.getId());
-		System.out.println(tweetMapper.entitiesToTweetResposeDtos(tweets));
-//		return tweetMapper.entitiesToTweetResposeDtos(tweets);
 
-		return null;
+		return tweetMapper.entitiesToTweetResposeDtos(tweets);
+
 	}
 
 	@Override
-	public List<TweetResponseDto> getMentions(String username)
-	{
+	public List<TweetResponseDto> getMentions(String username) {
 		User user = getUser(username);
-		if(user==null)
-			throw new NotFoundException("Username not found: "+username);
+		if (user == null)
+			throw new NotFoundException("Username not found: " + username);
 
 		return tweetMapper.entitiesToDtos(user.getMentions());
 	}
 
 	@Override
-	public List<TweetResponseDto> getFeed(String username)
-	{
+	public List<TweetResponseDto> getFeed(String username) {
 		User user = getUser(username);
-		if(user==null)
-			throw new NotFoundException("Username not found: "+username);
+		if (user == null)
+			throw new NotFoundException("Username not found: " + username);
 
 		List<Tweet> resultTweets = tweetRepository.findAllByAuthorAndDeletedFalseOrderByPostedDesc(user.getId());
-		for(User followee: user.getFollowing())
-		{
+		for (User followee : user.getFollowing()) {
 			resultTweets.addAll(tweetRepository.findAllByAuthorAndDeletedFalseOrderByPostedDesc(followee.getId()));
 		}
 
