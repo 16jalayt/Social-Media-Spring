@@ -67,12 +67,6 @@ public class UserServiceImpl implements UserService {
 			throw new BadRequestException("All fields are required on a user request dto");
 		} else if (userRequestDto.getProfile().getEmail() == null) {
 			throw new BadRequestException("Email is required");
-		} else if (userRequestDto.getProfile().getFirstName() == null) {
-			throw new BadRequestException("First name is required");
-		} else if (userRequestDto.getProfile().getLastName() == null) {
-			throw new BadRequestException("Last name is required");
-		} else if (userRequestDto.getProfile().getPhone() == null) {
-			throw new BadRequestException("Phone number is required");
 		} else if ((userRequestDto.getCredentials().getPassword() == null)
 				|| (userRequestDto.getCredentials().getUsername() == null)) {
 			throw new BadRequestException("Username and Password are required");
@@ -90,11 +84,15 @@ public class UserServiceImpl implements UserService {
 			throw new UnauthorizedException("Password is not correct.");
 		}
 	}
-	
-	//Validate user's credential
+
+	// Validate user's credential
 	private void validateCredential(User userToCheck) {
 		User user = getUser(userToCheck.getCredentials().getUsername());
-		if ((userToCheck.getCredentials().getPassword() == null) || (userToCheck.getCredentials().getUsername() == null)) {
+		if ((user.getCredentials() == null) || (user.getProfile() == null)) {
+			throw new BadRequestException("Missing User authentication or profile");
+		}
+		if ((userToCheck.getCredentials().getPassword() == null)
+				|| (userToCheck.getCredentials().getUsername() == null)) {
 			throw new BadRequestException("Username and password are required");
 		} else if (!user.getCredentials().getUsername().equals(userToCheck.getCredentials().getUsername())) {
 			throw new UnauthorizedException("username is not correct.");
@@ -104,29 +102,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	// Validate follower/following information
-	private void validateFollow(User makiko, User helena) {
-		if (helena.getFollowers().contains(makiko)) {
-			throw new BadRequestException("The user: " + makiko.getCredentials().getUsername()
-					+ " is already following the user: " + helena.getCredentials().getUsername());
+	private void validateFollow(User following, User follower) {
+		if (follower.getFollowers().contains(following)) {
+			throw new BadRequestException("The user: " + following.getCredentials().getUsername()
+					+ " is already following the user: " + follower.getCredentials().getUsername());
 		}
 
-		helena.getFollowers().add(makiko);
-		userRepository.saveAndFlush(helena);
+		follower.getFollowers().add(following);
+		userRepository.saveAndFlush(follower);
 
 	}
 
 	// Unfollow user
-	private void unFollowUser(User helena, User makiko) {
-		if (!helena.getFollowers().contains(makiko)) {
-			throw new BadRequestException("The user: " + makiko.getCredentials().getUsername()
-					+ " is not following the user: " + helena.getCredentials().getUsername());
+	private void unFollowUser(User follower, User following) {
+		if (!follower.getFollowers().contains(following)) {
+			throw new BadRequestException("The user: " + following.getCredentials().getUsername()
+					+ " is not following the user: " + follower.getCredentials().getUsername());
 		}
 
-		helena.getFollowers().remove(makiko);
-		userRepository.saveAndFlush(helena);
+		follower.getFollowers().remove(following);
+		userRepository.saveAndFlush(follower);
 
 	}
-
 
 	@Override
 	public List<UserResponseDto> getAllUsers() {
@@ -156,12 +153,21 @@ public class UserServiceImpl implements UserService {
 		validateCredentialsDto(credentialDto);
 		User userToDelete = getUser(username);
 		userToDelete.setDeleted(true);
+		userToDelete.setFollowers(null);
+//		userToDelete.setFollowing(null);
 		return userMapper.entityToUserResponseDto(userRepository.saveAndFlush(userToDelete));
 	}
 
 	@Override
 	public UserResponseDto updateUser(UserRequestDto userRequestDto, String username) {
 		User userToUpdate = getUser(username);
+		if (userRequestDto.getProfile() == null) {
+			throw new BadRequestException("Profile infomration is empty");
+		}
+		if (userRequestDto.getProfile().getEmail() == null) {
+			userRequestDto.getProfile().setEmail(userToUpdate.getProfile().getEmail());
+		}
+		validateUserRequest(userRequestDto);
 		User user = userMapper.userRequestDtoToEntity(userRequestDto);
 		validateCredential(user);
 
@@ -212,11 +218,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<TweetResponseDto> getTweetByUsername(String username) {
 		User user = getUser(username);
-		Long author = user.getId();
-		System.out.println("author" + author);
-		List<Tweet> tweets = tweetRepository.findAllByAuthorAndDeletedFalseOrderByPostedDesc(author);
-		System.out.println("tweets" + tweets.get(0));
-//		return tweetMapper.entitiesToDtos(tweets);
+
+		List<Tweet> tweets = tweetRepository.findAllByAuthorAndDeletedFalseOrderByPostedDesc(user.getId());
+		System.out.println(tweetMapper.entitiesToTweetResposeDtos(tweets));
+//		return tweetMapper.entitiesToTweetResposeDtos(tweets);
+
 		return null;
 	}
 

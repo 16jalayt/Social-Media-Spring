@@ -2,13 +2,12 @@ package com.cooksys.socialmediaassignment.services.impl;
 
 import java.util.Optional;
 
-import com.cooksys.socialmediaassignment.dtos.HashtagResponseDto;
-import com.cooksys.socialmediaassignment.exceptions.NotFoundException;
-import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.socialmediaassignment.entities.User;
+import com.cooksys.socialmediaassignment.exceptions.NotFoundException;
 import com.cooksys.socialmediaassignment.mappers.UserMapper;
+import com.cooksys.socialmediaassignment.repositories.HashtagRepository;
 import com.cooksys.socialmediaassignment.repositories.UserRepository;
 import com.cooksys.socialmediaassignment.services.ValidateService;
 
@@ -19,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 public class ValidateServiceImpl implements ValidateService {
 
 	private final UserRepository userRepository;
-	private final UserMapper userMapper;
 	private final HashtagRepository hashtagRepository;
 
 	private boolean checkUsername(String username) {
@@ -45,9 +43,9 @@ public class ValidateServiceImpl implements ValidateService {
 
 	@Override
 	public boolean validateTagExists(String label) {
-		if( hashtagRepository.findByLabel(label)!=null)
+		if (hashtagRepository.findByLabel(label) != null)
 			return true;
 		else
-			throw new NotFoundException("Hashtag does not exist: "+label);
+			throw new NotFoundException("Hashtag does not exist: " + label);
 	}
 }
