@@ -247,7 +247,7 @@ public class UserServiceImpl implements UserService {
 
 		resultTweets.sort(Comparator.comparing(Tweet::getPosted));
 
-		return null;
+		return tweetMapper.entitiesToDtos(resultTweets);
 	}
 
 }
